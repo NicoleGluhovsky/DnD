@@ -12,11 +12,10 @@ public abstract class Player extends Unit implements HeroicUnit {
     protected final int TEN = 10;
     protected final int FOUR = 4;
     protected final int ONE = 1;
-    protected final char PLAYERCHAR = '@';
+    protected static final char PLAYERCHAR = '@';
 
     public Player(Point pos, String name, HealthBar health, int AP, int DP){
-        super(pos, name, health, AP, DP);
-        super.setChar(PLAYERCHAR);
+        super(PLAYERCHAR, pos, name, health, AP, DP);
         Level = 1;
         XP = new ExperienceBar(0, FIFTY*Level);
     }

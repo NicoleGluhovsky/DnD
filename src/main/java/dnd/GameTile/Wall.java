@@ -1,8 +1,9 @@
 package dnd.GameTile;
 
-class Wall extends Tile{
+public class Wall extends Tile{
+    public static final char Wall_Tile = '#';
     public Wall(Point pos){
-        super('#', pos);
+        super(Wall_Tile, pos);
     }
 
 }

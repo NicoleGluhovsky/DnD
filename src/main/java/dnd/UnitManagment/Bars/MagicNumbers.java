@@ -10,6 +10,7 @@ public enum MagicNumbers {
     TEN(10),
     TWENTYFIVE(25),
     FIFTY(50);
+    
 
     private final int value;
 

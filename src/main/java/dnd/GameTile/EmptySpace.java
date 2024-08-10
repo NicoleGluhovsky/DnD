@@ -1,8 +1,9 @@
 package dnd.GameTile;
 
-class EmptySpace extends Tile{
+public class EmptySpace extends Tile{
+    private static final char EmptySpace_Tile = '.';
     public EmptySpace(Point pos){
-        super(',', pos);
+        super(EmptySpace_Tile, pos);
     }
 
 }

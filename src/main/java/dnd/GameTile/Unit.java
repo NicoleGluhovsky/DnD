@@ -19,13 +19,6 @@ public abstract class Unit extends Tile{
         this.AttackPoints = AP;
         this.DefensePoints = DP;
     }
-    public Unit(Point pos, String name, HealthBar health, int AP, int DP){
-        super(pos);
-        this.Name = name;
-        this.Health = health;
-        this.AttackPoints = AP;
-        this.DefensePoints = DP;
-    }
 
     protected void gameTick(){}; //each unit has a different game tick
     //protected abstract void obliterate(Unit victim);

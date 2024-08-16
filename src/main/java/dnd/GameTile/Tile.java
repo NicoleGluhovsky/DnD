@@ -1,6 +1,8 @@
 package dnd.GameTile;
 
-public class Tile {
+import dnd.UnitManagment.Bars.MagicChars;
+
+public abstract class Tile {
     private char tileChar;
     private Point position;
 
@@ -8,6 +10,12 @@ public class Tile {
     protected Tile(char tileChar, Point pos){
         this.tileChar = tileChar;
         this.position = pos;
+    }
+    protected Tile(char tileChar){
+        this.tileChar = tileChar;
+    }
+    protected void setAsDead(){
+        this.tileChar = MagicChars.DEAD.getSymbol();
     }
 
     public void swapPosition(Tile tile) {
@@ -24,6 +32,13 @@ public class Tile {
     public void setPosition(Point pos){
         this.position = pos;
     }
+    public Point getPosition(){
+        return this.position;
+    }
+    public char getTileChar(){
+        return this.tileChar;
+    }
+    public abstract void AttackTile(Unit unit);
 }
 
 

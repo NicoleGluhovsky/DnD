@@ -11,8 +11,8 @@ public class Trap extends Enemy{
     private boolean visible;
     private final double TRAPRANGE = 2.0;
 
-    public Trap(char tileChar, Point pos, String name, HealthBar health, int AP, int DP, int xp, int visibilityTime, int invisibilityTime, int tickCount, boolean visible){
-        super(tileChar, pos, name, health, AP, DP, xp);
+    public Trap(char tileChar, String name, int health, int AP, int DP, int xp, int visibilityTime, int invisibilityTime, int tickCount, boolean visible){
+        super(tileChar, name, health, AP, DP, xp);
         super.setRange(TRAPRANGE);
         this.visibilityTime = visibilityTime;
         this.invisibilityTime = invisibilityTime;

@@ -1,8 +1,6 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTile.Point;
 import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
 
 public class Rogue extends Player{
@@ -10,9 +8,9 @@ public class Rogue extends Player{
     private  AbilityBar energyBar;
     private int energyCost;
 
-    public Rogue(Point pos, String name, HealthBar health, int AP, int DP, AbilityBar energyBar, int energyCost){
-        super(pos, name, health, AP, DP);
-        this.energyBar = energyBar;
+    public Rogue(String name, int health, int AP, int DP, int energyCost){
+        super(name, health, AP, DP);
+        this.energyBar = new AbilityBar(MagicNumbers.HUNDRED.getValue(), MagicNumbers.HUNDRED.getValue(), energyCost);
         this.energyCost = energyCost;
     }
 

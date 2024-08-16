@@ -12,10 +12,10 @@ public abstract class Unit extends Tile{
     public Combat combat = new Combat();
 
 
-    public Unit(char tileChar, Point pos, String name, HealthBar health, int AP, int DP){
-        super(tileChar, pos);
+    public Unit(char tileChar, String name, int health, int AP, int DP){
+        super(tileChar);
         this.Name = name;
-        this.Health = health;
+        this.Health = new HealthBar(health);
         this.AttackPoints = AP;
         this.DefensePoints = DP;
     }
@@ -26,8 +26,8 @@ public abstract class Unit extends Tile{
 
     public abstract void accept(Unit Visitor);
 
-    public abstract void visit(Player Visited);
-    public abstract void visit(Enemy Visited);
+    public abstract void kill(Player Visited);
+    public abstract void kill(Enemy Visited);
 
 
 
@@ -55,6 +55,11 @@ public abstract class Unit extends Tile{
     {
         return this.Health.takeDamage(damage);
     } 
+
+    @Override
+    public void AttackTile(Unit unit){
+        combat.Attack(unit, this);
+    }
 
     
 

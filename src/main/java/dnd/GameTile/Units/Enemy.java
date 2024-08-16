@@ -1,15 +1,15 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTile.Point;
+import dnd.GameTickSingleton;
 import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.HealthBar;
 
-public class Enemy extends Unit{
+public abstract class Enemy extends Unit{
     private final int experienceVal;
     private double range;
 
-    public Enemy(char tileChar, Point pos, String name, HealthBar health, int AP, int DP, int xp){
-        super(tileChar, pos, name, health, AP, DP);
+    public Enemy(char tileChar, String name, int health, int AP, int DP, int xp){
+        super(tileChar, name, health, AP, DP);
         this.experienceVal = xp;
     }
     public int getXP()
@@ -28,17 +28,17 @@ public class Enemy extends Unit{
     
     @Override
     public void accept(Unit killer){
-        killer.visit(this);
+        killer.kill(this);
     }
 
     @Override
-    public void visit(Player Visited){
-        //
+    public void kill(Player Visited){
+        Visited.setAsDead();
     }
 
     @Override
-    public void visit(Enemy Visited){
-        //
+    public void kill(Enemy Visited){
+        throw new UnsupportedOperationException("Enemy cannot kill another enemy");
     }
 
 

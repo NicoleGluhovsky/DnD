@@ -1,9 +1,15 @@
 package dnd.GameTile;
 
+import dnd.UnitManagment.Bars.MagicChars;
+
 public class EmptySpace extends Tile{
-    private static final char EmptySpace_Tile = '.';
     public EmptySpace(Point pos){
-        super(EmptySpace_Tile, pos);
+        super(MagicChars.EMPTYSPACE.getSymbol(), pos);
+    }
+
+    @Override
+    public void AttackTile(Unit unit){
+        throw new UnsupportedOperationException("Cannot attack EmptySpace");
     }
 
 }

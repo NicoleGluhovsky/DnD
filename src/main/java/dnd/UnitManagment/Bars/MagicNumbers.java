@@ -9,8 +9,8 @@ public enum MagicNumbers {
     FIVE(5),
     TEN(10),
     TWENTYFIVE(25),
-    FIFTY(50);
-    
+    FIFTY(50),
+    HUNDRED(100);
 
     private final int value;
 

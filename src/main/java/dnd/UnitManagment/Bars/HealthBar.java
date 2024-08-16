@@ -1,8 +1,8 @@
 package dnd.UnitManagment.Bars;
 
 public class HealthBar extends Bar{
-    public HealthBar(int current, int max){
-        super(current, max);
+    public HealthBar(int health){
+        super(health, health);
     }
 
     public boolean takeDamage(int damage){

@@ -5,32 +5,39 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.TreeMap;
+
 import dnd.GameTile.Point;
 import dnd.GameTile.Tile;
 import dnd.GameTile.Units.Player;
 import dnd.GameTile.Units.Enemy;
 import dnd.UnitManagment.Bars.MagicNumbers;
 import dnd.GameTile.EmptySpace;
+import dnd.GameTile.TileFactory;
 import dnd.GameTile.Wall;
 
 
 
-public class GameTick {
+public final class GameTick {
+    TileFactory factory = new TileFactory();
     private int tick = MagicNumbers.ZERO.getValue();
     private TreeMap<Point, Tile> gameLevel;
     private Player player;
-    private Enemy[] enemies;
+    private List<Enemy> enemies;
 
-    public GameTick(TreeMap<Point, Tile> gameLevel, Player player, Enemy[] enemies) {
-        this.gameLevel = gameLevel;
-        this.player = player;
-        this.enemies = enemies;
+
+    public GameTick(int Level){
+        LoadBoardLevel(Level);
+    }
+
+    public GameTick(int PlayerID, int Level){
+        player = factory.producePlayer(PlayerID);
+        LoadBoardLevel(Level);
     }
 
     public void LoadBoardLevel(int level) {
         List<String> fileContent = readLevelFile(level);
         // for each char add to gameLevel
-        createNewTiles(fileContent);
+       gameLevel =  createNewTiles(fileContent);
 
         // for each enemy add to enemies[]
     }
@@ -57,7 +64,7 @@ public class GameTick {
                         newtile = createPlayerTile(pos);
                         break;
                     default:
-                        newtile = createEnemyTile(pos);
+                        newtile = createEnemyTile(c, pos);
                         break;
                 }
                 Board.put(pos, newtile);
@@ -76,21 +83,22 @@ public class GameTick {
         return new Wall(pos);
     }
     private Tile createPlayerTile(Point pos){
+        player.setPosition(pos); 
         return player;
     }
-    private Tile createEnemyTile(Point pos){
-        //case for enemy tipes
-        //function for each the spacific anamy
-        return null;
+    private Tile createEnemyTile(char c, Point pos){
+        Enemy e = factory.produceEnemy(c, pos);
+        enemies.add(e);
+        return e;
     }
 
-
+    public Tile getTileValue(Point pos){
+        return gameLevel.get(pos);
+    }
 
     private List<String> readLevelFile(int level){
-        String path = "Levels";
-        String filePath = path + "/" + level;
-
-        StringBuilder fileContent = new StringBuilder();
+        String path = "src\\main\\resources\\Levels\\level";
+        String filePath = path + level + ".txt";
 
         List<String> lines;
         try {
@@ -101,5 +109,10 @@ public class GameTick {
 
         return lines;
     }
+
+    public void killedAnEnemy(Player p, Point pos){
+        p.swapPosition(new EmptySpace(pos));
+    }
+
 }
 

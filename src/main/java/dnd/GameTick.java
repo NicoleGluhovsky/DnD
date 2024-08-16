@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import dnd.GameTile.EmptySpace;
 import dnd.GameTile.Point;
 import dnd.GameTile.Tile;
-import dnd.GameTile.Units.Player;
-import dnd.GameTile.Units.Enemy;
-import dnd.UnitManagment.Bars.MagicNumbers;
-import dnd.GameTile.EmptySpace;
 import dnd.GameTile.TileFactory;
+import dnd.GameTile.Units.Enemy;
+import dnd.GameTile.Units.Player;
 import dnd.GameTile.Wall;
+import dnd.UnitManagment.Bars.MagicNumbers;
 
 
 
@@ -23,14 +23,17 @@ public final class GameTick {
     private int tick = MagicNumbers.ZERO.getValue();
     private TreeMap<Point, Tile> gameLevel;
     private Player player;
-    private List<Enemy> enemies = new ArrayList<Enemy>();
+    private final List<Enemy> enemies = new ArrayList<>();
+    private int maxX;
+    private int maxY;
+    private boolean combatAccured = false;
 
     public GameTick(int Level){
         LoadBoardLevel(Level);
     }
 
     public GameTick(int PlayerID, int Level){
-        player = factory.producePlayer(PlayerID);
+        player = factory.producePlayer(PlayerID+1);
         LoadBoardLevel(Level);
     }
 
@@ -44,7 +47,7 @@ public final class GameTick {
 
     private TreeMap<Point, Tile> createNewTiles(List<String> lines){
 
-        TreeMap<Point, Tile> Board = new TreeMap<Point, Tile>();
+        TreeMap<Point, Tile> Board = new TreeMap<>();
         int Xcounter = 0;
         int Ycounter = 0;
 
@@ -52,26 +55,20 @@ public final class GameTick {
             for(char c : line.toCharArray()){
                 Tile newtile;
                 Point pos = new Point(Xcounter, Ycounter);
-                switch(c) {
-                    case '.':
-                        newtile = createEmptyTile(pos);
-
-                        break;
-                    case '#':
-                        newtile = createWallTile(pos);
-                        break;
-                    case '@':
-                        newtile = createPlayerTile(pos);
-                        break;
-                    default:
-                        newtile = createEnemyTile(c, pos);
-                        break;
-                }
+                newtile = switch (c) {
+                    case '.' -> createEmptyTile(pos);
+                    case '#' -> createWallTile(pos);
+                    case '@' -> createPlayerTile(pos);
+                    default -> createEnemyTile(c, pos);
+                };
                 Board.put(pos, newtile);
                 Xcounter +=1;
             }
             Ycounter += 1;
+            maxX = Xcounter;
+            Xcounter = 0;
         }
+        maxY = Ycounter;
         return Board;
     }
 
@@ -97,7 +94,7 @@ public final class GameTick {
     }
 
     private List<String> readLevelFile(int level){
-        String path = "src\\main\\resources\\Levels\\level";
+        String path = "src/main/resources/Levels/level";
         String filePath = path + level + ".txt";
 
         List<String> lines;
@@ -110,15 +107,35 @@ public final class GameTick {
         return lines;
     }
 
-    public void killedAnEnemy(Player p, Point pos){
-        p.swapPosition(new EmptySpace(pos));
+    public void killedAnEnemy(Player p, Enemy rip){
+        p.swapPosition(new EmptySpace(rip.getPosition()));
+        enemies.remove(rip);
     }
 
-    public void showGameLevel(){
+    public char[][] toDisplay(){
+        
+        char[][] board = new char[maxY][maxX];
         for(Point p : gameLevel.keySet()){
-            System.out.println(p.toString() + " : " + gameLevel.get(p).toString());
+            board[p.getY()][p.getX()] = gameLevel.get(p).getTileChar();
         }
+        return board;
+    }
+
+    String getGameState() {
+        if(combatAccured){
+            return "Combat accured";// game tick is obsercer that observes the game state
+        }
+        else{
+            return player.toString();
+        }
+        
+    }
+
+    boolean isEnded() {
+        return player.isDead();
     }
 
 }
 
+//observable - tick counter
+//observers - everyone else

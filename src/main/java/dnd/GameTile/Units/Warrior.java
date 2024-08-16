@@ -1,11 +1,10 @@
 package dnd.GameTile.Units;
 
 import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
 
 public class Warrior extends Player{
-    private AbilityBar abilityBar; //current will be the remaining cooldown. max will be the cooldown time. each game tick will increase current by 1.
+    private final AbilityBar abilityBar; //current will be the remaining cooldown. max will be the cooldown time. each game tick will increase current by 1.
 
 
     public Warrior(String name, int health, int AP, int DP, int abilityCooldown){
@@ -40,6 +39,11 @@ public class Warrior extends Player{
     @Override
     public int AbilityDamage(){
         return (int)(this.getHealth().getMax() * 0.10);
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + "\\tAbility Cooldown: " + abilityBar.getCurrent() + "/" + abilityBar.getMax();
     }
 
 }

@@ -9,7 +9,7 @@ import dnd.UnitManagment.Bars.MagicNumbers;
 public class Mage extends Player{
     private final AbilityBar ManaBar;
     private int spellPower;
-    private int hitCount;
+    private final int hitCount;
     private final Double range;
 
 
@@ -51,6 +51,11 @@ public class Mage extends Player{
         //  atack: list[x] with: spellPower
         combat.AbilityAttack(this, enemy, AbilityDamage()); 
         //  if list[x] dead, list.pop(x)
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + "\\tMana: " + ManaBar.getCurrent() + "/" + ManaBar.getMax() + "\\tSpellPower: " + spellPower;
     }
     
 }

@@ -5,8 +5,8 @@ import dnd.GameTile.Units.Player;
 import dnd.UnitManagment.Bars.HealthBar;
 
 public abstract class Unit extends Tile{
-    private String Name;
-    private HealthBar Health;
+    private final String Name;
+    private final HealthBar Health;
     private int AttackPoints;
     private int DefensePoints;
     public Combat combat = new Combat();
@@ -18,6 +18,7 @@ public abstract class Unit extends Tile{
         this.Health = new HealthBar(health);
         this.AttackPoints = AP;
         this.DefensePoints = DP;
+
     }
 
     protected void gameTick(){}; //each unit has a different game tick
@@ -55,6 +56,9 @@ public abstract class Unit extends Tile{
     {
         return this.Health.takeDamage(damage);
     } 
+    public String getUnitName(){
+        return Name;
+    }
 
     @Override
     public void AttackTile(Unit unit){

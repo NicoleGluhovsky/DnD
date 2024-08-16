@@ -6,8 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import dnd.GameTile.Units.*;
-import dnd.UnitManagment.Bars.AbilityBar;
+import dnd.GameTile.Units.Boss;
+import dnd.GameTile.Units.Enemy;
+import dnd.GameTile.Units.Hunter;
+import dnd.GameTile.Units.Mage;
+import dnd.GameTile.Units.Monster;
+import dnd.GameTile.Units.Player;
+import dnd.GameTile.Units.Rogue;
+import dnd.GameTile.Units.Trap;
+import dnd.GameTile.Units.Warrior;
 import dnd.UnitManagment.Bars.MagicChars;
 
 public class TileFactory {
@@ -52,6 +59,14 @@ public class TileFactory {
         public Enemy produceEnemy(char tile, Point p){
             Enemy e = enemyTypes.get(tile).get();
             return e;
+        }
+
+        public String[] getAllPlayerTypes(){
+            String[] charecturs = new String[playerTypes.size()];
+            for(int i = 0; i < playerTypes.size(); i++){
+                charecturs[i] = playerTypes.get(i).get().toString();
+            }
+            return charecturs;
         }
 
 }

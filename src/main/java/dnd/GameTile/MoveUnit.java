@@ -1,6 +1,7 @@
 package dnd.GameTile;
 
 import java.util.Random;
+
 import dnd.GameTickSingleton;
 import dnd.GameTile.Units.Monster;
 
@@ -29,23 +30,20 @@ class MoveUnit {
         char nextTileChar = nextTile.getTileChar();
         char thisTileChar = U.getTileChar();
         switch (nextTileChar) {
-            case '#':
-                // if it is a wall, do nothing
-                break;
-            case '.':
-                // if empty, move
+            case '#' -> {
+            }
+            case '.' -> // if empty, move
                 U.swapPosition(nextTile);
-                break;
-            case '@':
-                // if it is a unit, visitor, only if playerVSMonster attack. else do nothing
+            case '@' -> // if it is a unit, visitor, only if playerVSMonster attack. else do nothing
                 nextTile.AttackTile(U);
-                break;
-            default:
+            default -> {
                 if (thisTileChar == '@' && nextTileChar == 'M') {
                     nextTile.AttackTile(U);
                 }
+            }
         }
-        
+        // if it is a wall, do nothing
+                
         
        
     }

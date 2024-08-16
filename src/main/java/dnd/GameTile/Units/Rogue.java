@@ -5,13 +5,11 @@ import dnd.UnitManagment.Bars.MagicNumbers;
 
 public class Rogue extends Player{
 
-    private  AbilityBar energyBar;
-    private int energyCost;
+    private final AbilityBar energyBar;
 
     public Rogue(String name, int health, int AP, int DP, int energyCost){
         super(name, health, AP, DP);
         this.energyBar = new AbilityBar(MagicNumbers.HUNDRED.getValue(), MagicNumbers.HUNDRED.getValue(), energyCost);
-        this.energyCost = energyCost;
     }
 
     @Override
@@ -38,6 +36,11 @@ public class Rogue extends Player{
         Enemy enemy = null;
         //attack
         combat.AbilityAttack(this, enemy, AbilityDamage()); 
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + "\\tEnergy: " + energyBar.getCurrent() + "/" + energyBar.getMax();
     }
 
 }

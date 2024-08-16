@@ -1,8 +1,6 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTickSingleton;
 import dnd.GameTile.Unit;
-import dnd.UnitManagment.Bars.HealthBar;
 
 public abstract class Enemy extends Unit{
     private final int experienceVal;
@@ -34,6 +32,7 @@ public abstract class Enemy extends Unit{
     @Override
     public void kill(Player Visited){
         Visited.setAsDead();
+
     }
 
     @Override

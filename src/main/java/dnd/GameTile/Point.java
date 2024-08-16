@@ -16,11 +16,11 @@ public class Point implements Comparable<Point>{
         this.y = other.y;
     }
 
-    protected int getX(){
+    public int getX(){
         return x;
     }
 
-    protected int getY(){
+    public int getY(){
         return y;
     }
 
@@ -52,6 +52,11 @@ public class Point implements Comparable<Point>{
         } else {
             return Integer.compare(this.y, other.y);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
     
 }

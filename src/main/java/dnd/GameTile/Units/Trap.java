@@ -1,8 +1,5 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTile.Point;
-import dnd.UnitManagment.Bars.HealthBar;
-
 public class Trap extends Enemy{
 
     private int visibilityTime;

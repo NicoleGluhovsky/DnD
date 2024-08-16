@@ -1,17 +1,21 @@
 package dnd.GameTile;
-import java.util.Random; 
-import dnd.GameTile.Units.HeroicUnit;
-import dnd.GameTile.Units.Warrior;
+import java.util.Random;
+
+import View.CLI;
 import dnd.GameTile.Units.Enemy;
+import dnd.GameTile.Units.Warrior;
 
 public class Combat{
-    private Random random = new Random(); 
+    private final Random random = new Random();
+    private final CLI cli = new CLI();
+
 
 
     public void Attack(Unit Attaker, Unit Attacked){
         int attackPower = getRandomAP(Attaker);
         int defensePoints = getRandomDP(Attacked);
         int diffrance = attackPower - defensePoints;
+        cli.displatCombat(Attaker, Attacked, attackPower, defensePoints);
         if(diffrance > 0){
             boolean resCombat = Attacked.takeHit(diffrance);
             if(resCombat){

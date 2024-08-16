@@ -1,10 +1,9 @@
 package dnd.GameTile.Units;
 
-import dnd.UnitManagment.Bars.HealthBar;
 
 public class Boss extends Monster implements HeroicUnit {
 
-    private int abilityFrequency;
+    private final int abilityFrequency;
 
     public Boss(char tileChar, String name, int health, int AP, int DP, int xp, int visionRange, int abilityFrequency){
         super(tileChar, name, health, AP, DP, xp, visionRange);

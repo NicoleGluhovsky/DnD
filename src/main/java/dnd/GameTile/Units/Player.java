@@ -3,13 +3,14 @@ package dnd.GameTile.Units;
 import dnd.GameTickSingleton;
 import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.ExperienceBar;
-import dnd.UnitManagment.Bars.MagicNumbers;
 import dnd.UnitManagment.Bars.MagicChars;
+import dnd.UnitManagment.Bars.MagicNumbers;
 
 
 public abstract class Player extends Unit implements HeroicUnit {
     private final ExperienceBar XP;
     private  int Level;
+    private  boolean isDead = false;
 
     public Player(String name, int health, int AP, int DP){
         super(MagicChars.PLAYER.getSymbol(), name, health, AP, DP);
@@ -40,9 +41,11 @@ public abstract class Player extends Unit implements HeroicUnit {
             levelUP();
         }
         */
-        GameTickSingleton.getInstance().getValue().killedAnEnemy(this, Visited.getPosition());
+        GameTickSingleton.getInstance().getValue().killedAnEnemy(this, Visited);
     }
+    @Override
     public void setAsDead(){
+        isDead = true;
         super.setAsDead();
     }
 
@@ -61,6 +64,15 @@ public abstract class Player extends Unit implements HeroicUnit {
         getHealth().setCurrent(getHealth().getMax());
         super.setAP(super.getAP() + MagicNumbers.FOUR.getValue() * Level);
         super.setDP(super.getDP() + MagicNumbers.ONE.getValue() * Level);
+    }
+
+    @Override
+    public String toString(){
+        return getUnitName() + "\tHealth: " + getHealth().getCurrent() + "/" + getHealth().getMax() + "\\tAttack: " + getAP() + "\\tDefense: "+ getDP() +"\\tLevel : " + Level + "\\tXP: " + XP.getCurrent() + "/" + XP.getMax();
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }
 

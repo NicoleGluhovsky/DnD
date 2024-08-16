@@ -9,6 +9,6 @@ public class Monster extends Enemy {
     }
 
     public void chasePlayer(){
-        //TODO
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

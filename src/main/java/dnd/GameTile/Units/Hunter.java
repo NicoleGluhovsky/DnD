@@ -43,4 +43,9 @@ public class Hunter extends Player{
         combat.AbilityAttack(this, enemy, AbilityDamage()); 
     }
 
+    @Override
+    public String toString(){
+        return super.toString() + "\\tArrows: " + arrowCount + "\\tRange: " + range;
+    }
+
 }

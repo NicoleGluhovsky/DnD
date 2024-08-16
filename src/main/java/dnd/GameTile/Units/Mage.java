@@ -2,9 +2,7 @@ package dnd.GameTile.Units;
 
 import static java.lang.Math.min;
 
-import dnd.GameTile.Point;
 import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
 
 
@@ -15,8 +13,8 @@ public class Mage extends Player{
     private final Double range;
 
 
-    public Mage(Point pos, String name, HealthBar health, int AP, int DP, int maxMana, int manaCost, double range, int spellPower, int hitCount){
-        super(pos, name, health, AP, DP);
+    public Mage(String name, int health, int AP, int DP, int maxMana, int manaCost, int spellPower, int hitCount, double range){
+        super(name, health, AP, DP);
         this.ManaBar = new AbilityBar(maxMana/4, maxMana, manaCost);
         this.spellPower = spellPower;
         this.hitCount = hitCount;
@@ -28,7 +26,7 @@ public class Mage extends Player{
         super.levelUP();
         ManaBar.setMax(ManaBar.getMax() + super.GetLevel() * MagicNumbers.TWENTYFIVE.getValue());
         ManaBar.setCurrent(min(ManaBar.getCurrent() + ManaBar.getMax() / 4, ManaBar.getMax()));
-        spellPower += spellPower + super.GetLevel() * TEN;
+        spellPower += spellPower + super.GetLevel() * MagicNumbers.TEN.getValue();
     }
 
     @Override

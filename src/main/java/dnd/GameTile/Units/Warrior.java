@@ -1,6 +1,5 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTile.Point;
 import dnd.UnitManagment.Bars.AbilityBar;
 import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
@@ -9,9 +8,9 @@ public class Warrior extends Player{
     private AbilityBar abilityBar; //current will be the remaining cooldown. max will be the cooldown time. each game tick will increase current by 1.
 
 
-    public Warrior(char tileChar, Point pos, String name, HealthBar health, int AP, int DP, AbilityBar abilityBar, int abilityCooldown){
-        super(pos, name, health, AP, DP);
-        this.abilityBar = abilityBar;
+    public Warrior(String name, int health, int AP, int DP, int abilityCooldown){
+        super(name, health, AP, DP);
+        this.abilityBar = new AbilityBar(MagicNumbers.ZERO.getValue(), abilityCooldown, abilityCooldown);
     }
 
     @Override

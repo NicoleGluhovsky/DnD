@@ -3,6 +3,7 @@ package dnd;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -22,8 +23,7 @@ public final class GameTick {
     private int tick = MagicNumbers.ZERO.getValue();
     private TreeMap<Point, Tile> gameLevel;
     private Player player;
-    private List<Enemy> enemies;
-
+    private List<Enemy> enemies = new ArrayList<Enemy>();
 
     public GameTick(int Level){
         LoadBoardLevel(Level);
@@ -112,6 +112,12 @@ public final class GameTick {
 
     public void killedAnEnemy(Player p, Point pos){
         p.swapPosition(new EmptySpace(pos));
+    }
+
+    public void showGameLevel(){
+        for(Point p : gameLevel.keySet()){
+            System.out.println(p.toString() + " : " + gameLevel.get(p).toString());
+        }
     }
 
 }

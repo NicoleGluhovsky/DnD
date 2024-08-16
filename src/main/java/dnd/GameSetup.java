@@ -14,6 +14,7 @@ public class GameSetup {
                 // create game object
                 
                 GameTick game = new GameTick(PlayerID, level);
+                game.showGameLevel();
 
         }
         

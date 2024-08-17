@@ -1,25 +1,22 @@
 package dnd.GameTile;
 
 import java.util.Random;
-import dnd.GameTickSingleton;
-import dnd.GameTile.Units.Monster;
 
+import Controller.GameTickSingleton;
+import dnd.UnitManagment.Bars.Directions;
     
 
-class MoveUnit {
+public class MoveUnit {
 
-    public enum Direction {
-        UP, DOWN, LEFT, RIGHT;
-    }
     
     public void RandomMove(Unit U){
         Random rand = new Random();
-        int directionIndex = rand.nextInt(Direction.values().length);
-        Direction direction = Direction.values()[directionIndex];
+        int directionIndex = rand.nextInt(Directions.values().length-2); //to not castability
+        Directions direction = Directions.values()[directionIndex];
         Move(U, direction);
     }
 
-    public void Move(Unit U, Direction direction){
+    public void Move(Unit U, Directions direction){
         // get current position VS next position
         Point currentPos = U.getPosition();
         Point nextPos = new Point(currentPos);
@@ -29,32 +26,22 @@ class MoveUnit {
         char nextTileChar = nextTile.getTileChar();
         char thisTileChar = U.getTileChar();
         switch (nextTileChar) {
-            case '#':
-                // if it is a wall, do nothing
-                break;
-            case '.':
-                // if empty, move
-                U.swapPosition(nextTile);
-                break;
-            case '@':
-                // if it is a unit, visitor, only if playerVSMonster attack. else do nothing
+            case '#' -> {
+            }
+            case '.' -> // if empty, move
+                GameTickSingleton.getInstance().getValue().swapPosition(U, nextTile);
+            case '@' -> // if it is a unit, visitor, only if playerVSMonster attack. else do nothing
                 nextTile.AttackTile(U);
-                break;
-            default:
-                if (thisTileChar == '@' && nextTileChar == 'M') {
+            default -> {
+                if (thisTileChar == '@') {
                     nextTile.AttackTile(U);
                 }
+            }
         }
-        
+        // if it is a wall, do nothing
+                
         
        
     }
 
-    public static void main(String[] args) {
-        System.out.println("in MoveUnit");
-        Monster U = new Monster('@', "Monsty", 100 , 10, 20, 100, 2);
-        U.setPosition(new Point(5, 5));
-        MoveUnit MU = new MoveUnit();
-        MU.RandomMove(U);
-    }
 }

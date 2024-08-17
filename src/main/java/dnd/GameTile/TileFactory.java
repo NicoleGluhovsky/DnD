@@ -6,8 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import dnd.GameTile.Units.*;
-import dnd.UnitManagment.Bars.AbilityBar;
+import dnd.GameTile.Units.Boss;
+import dnd.GameTile.Units.Enemy;
+import dnd.GameTile.Units.Hunter;
+import dnd.GameTile.Units.Mage;
+import dnd.GameTile.Units.Monster;
+import dnd.GameTile.Units.Player;
+import dnd.GameTile.Units.Rogue;
+import dnd.GameTile.Units.Trap;
+import dnd.GameTile.Units.Warrior;
 import dnd.UnitManagment.Bars.MagicChars;
 
 public class TileFactory {
@@ -18,7 +25,7 @@ public class TileFactory {
             () -> new Warrior("The Hound", 400, 20, 6, 5),
             () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6.0),
             () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 25, 3, 4.0),
-            () -> new Rogue("Arya Stark", 150, 40, 2, 20),
+            () -> new Rogue("Arya Stark", 150, 400, 2, 20),
             () -> new Rogue("Bronn", 250, 35, 3, 50),
             () -> new Hunter("Ygritte", 220, 30, 2, 6)
         );
@@ -51,7 +58,16 @@ public class TileFactory {
 
         public Enemy produceEnemy(char tile, Point p){
             Enemy e = enemyTypes.get(tile).get();
+            e.setPosition(p);
             return e;
+        }
+
+        public String[] getAllPlayerTypes(){
+            String[] characters = new String[playerTypes.size()];
+            for(int i = 0; i < playerTypes.size(); i++){
+                characters[i] = playerTypes.get(i).get().toString();
+            }
+            return characters;
         }
 
 }

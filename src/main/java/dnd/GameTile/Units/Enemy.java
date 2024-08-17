@@ -1,8 +1,7 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTickSingleton;
 import dnd.GameTile.Unit;
-import dnd.UnitManagment.Bars.HealthBar;
+import dnd.GameTile.MoveUnit;
 
 public abstract class Enemy extends Unit{
     private final int experienceVal;
@@ -12,6 +11,7 @@ public abstract class Enemy extends Unit{
         super(tileChar, name, health, AP, DP);
         this.experienceVal = xp;
     }
+    
     public int getXP()
     {
         return experienceVal;
@@ -21,25 +21,35 @@ public abstract class Enemy extends Unit{
         this.range = range;
     }
 
+    public double getRange(){
+        return range;
+    }
+
+    public void checkRange(Player player, MoveUnit moveUnit){
+        if((this.getPosition().Range(player.getPosition())) < this.getRange()){
+            noticePlayer(player, moveUnit);
+        }
+    }
+
+    public void noticePlayer(Player player, MoveUnit moveUnit){};
+
     @Override
     public void death(Unit killer){
-        killer.accept(this);
-    }
-    
-    @Override
-    public void accept(Unit killer){
         killer.kill(this);
     }
 
     @Override
-    public void kill(Player Visited){
-        Visited.setAsDead();
+    public void kill(Player luser){
+        luser.setAsDead();
     }
 
     @Override
     public void kill(Enemy Visited){
-        throw new UnsupportedOperationException("Enemy cannot kill another enemy");
+        mc.send("Enemy cannot kill another enemy");
     }
 
-
+    @Override
+    public String toString(){
+        return super.toString() + "\tXP: " + experienceVal + "\tRange: " + range;
+    }
 }

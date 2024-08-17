@@ -1,7 +1,9 @@
 package dnd.GameTile.Units;
 
 import static java.lang.Math.min;
+import java.util.List;
 
+import Controller.GameTickSingleton;
 import dnd.UnitManagment.Bars.AbilityBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
 
@@ -9,7 +11,7 @@ import dnd.UnitManagment.Bars.MagicNumbers;
 public class Mage extends Player{
     private final AbilityBar ManaBar;
     private int spellPower;
-    private int hitCount;
+    private final int hitCount;
     private final Double range;
 
 
@@ -35,7 +37,7 @@ public class Mage extends Player{
             Blizzard();
         }
         else{
-            throw new IllegalArgumentException("Not enough mana");
+            mc.send(getUnitName() + "Doesn't have enough mana");
         }
     }
     @Override
@@ -44,13 +46,28 @@ public class Mage extends Player{
     }
 
     private void Blizzard(){
+        mc.send(getUnitName() + " cast Blizzard.");
         //list l = get list of enemys in range
-        //for heatCount:
-        //  x = random(len(list))
-        Enemy enemy = null;
-        //  atack: list[x] with: spellPower
-        combat.AbilityAttack(this, enemy, AbilityDamage()); 
-        //  if list[x] dead, list.pop(x)
+        List<Enemy> l = GameTickSingleton.getInstance().getValue().getEnemiesInRange(range);
+
+        for (int i = 0; i < hitCount  && !l.isEmpty(); i++){
+            int x = (int)(Math.random() * l.size());
+            Enemy enemy = l.get(x);
+            combat.AbilityAttack(this, enemy, AbilityDamage());
+            if (enemy.isDead()){
+                l.remove(x);
+            }
+        }
+        
+    }
+    @Override
+    public void regainAbility(){
+        this.ManaBar.regain(this.GetLevel());
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + "\tMana: " + ManaBar.getCurrent() + "/" + ManaBar.getMax() + "\tSpellPower: " + spellPower;
     }
     
 }

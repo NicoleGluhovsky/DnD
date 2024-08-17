@@ -11,7 +11,7 @@ public class HealthBar extends Bar{
     }
 
     public void heal(int heal){
-        this.current += heal;
+        this.current = Math.min(current+heal, max);
     }
 
     public boolean handleDeath(){

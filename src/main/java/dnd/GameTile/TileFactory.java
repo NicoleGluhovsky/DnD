@@ -25,7 +25,7 @@ public class TileFactory {
             () -> new Warrior("The Hound", 400, 20, 6, 5),
             () -> new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 5, 6.0),
             () -> new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 25, 3, 4.0),
-            () -> new Rogue("Arya Stark", 150, 40, 2, 20),
+            () -> new Rogue("Arya Stark", 150, 400, 2, 20),
             () -> new Rogue("Bronn", 250, 35, 3, 50),
             () -> new Hunter("Ygritte", 220, 30, 2, 6)
         );
@@ -58,15 +58,16 @@ public class TileFactory {
 
         public Enemy produceEnemy(char tile, Point p){
             Enemy e = enemyTypes.get(tile).get();
+            e.setPosition(p);
             return e;
         }
 
         public String[] getAllPlayerTypes(){
-            String[] charecturs = new String[playerTypes.size()];
+            String[] characters = new String[playerTypes.size()];
             for(int i = 0; i < playerTypes.size(); i++){
-                charecturs[i] = playerTypes.get(i).get().toString();
+                characters[i] = playerTypes.get(i).get().toString();
             }
-            return charecturs;
+            return characters;
         }
 
 }

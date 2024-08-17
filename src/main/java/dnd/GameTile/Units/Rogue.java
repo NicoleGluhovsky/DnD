@@ -2,6 +2,8 @@ package dnd.GameTile.Units;
 
 import dnd.UnitManagment.Bars.AbilityBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
+import Controller.GameTickSingleton;
+import java.util.List;
 
 public class Rogue extends Player{
 
@@ -29,18 +31,27 @@ public class Rogue extends Player{
         if (energyBar.castAbility()){
             FanOfKnives();
         }
+        else{
+            mc.send(getUnitName() + "Doesn't have enough energy");
+        }
     }
 
     private void FanOfKnives(){
-        //attack all in range 2
-        Enemy enemy = null;
-        //attack
-        combat.AbilityAttack(this, enemy, AbilityDamage()); 
+        mc.send(getUnitName() + " cast Fan of Knives.");
+        List<Enemy> enemies = GameTickSingleton.getInstance().getValue().getEnemiesInRange(MagicNumbers.TWO.getValue());
+        for (Enemy e : enemies){
+            combat.AbilityAttack(this, e, AbilityDamage());
+        }
+    }
+
+    @Override
+    public void regainAbility(){
+        energyBar.regain(10);
     }
 
     @Override
     public String toString(){
-        return super.toString() + "\\tEnergy: " + energyBar.getCurrent() + "/" + energyBar.getMax();
+        return super.toString() + "\tEnergy: " + energyBar.getCurrent() + "/" + energyBar.getMax();
     }
 
 }

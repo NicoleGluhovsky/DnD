@@ -1,6 +1,5 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTickSingleton;
 import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.ExperienceBar;
 import dnd.UnitManagment.Bars.MagicChars;
@@ -10,7 +9,6 @@ import dnd.UnitManagment.Bars.MagicNumbers;
 public abstract class Player extends Unit implements HeroicUnit {
     private final ExperienceBar XP;
     private  int Level;
-    private  boolean isDead = false;
 
     public Player(String name, int health, int AP, int DP){
         super(MagicChars.PLAYER.getSymbol(), name, health, AP, DP);
@@ -20,11 +18,6 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     @Override       
     public void death(Unit killer){
-        killer.accept(this);
-    }
-
-    @Override
-    public void accept(Unit killer){
         killer.kill(this);
     }
 
@@ -34,24 +27,15 @@ public abstract class Player extends Unit implements HeroicUnit {
     }
     
     @Override
-    public void kill(Enemy Visited){
-        XP.gainExperience(Visited.getXP());
-        /*
-        if(XP.isFull()){
+    public void kill(Enemy pray){
+        XP.gainExperience(pray.getXP());
+        if(XP.checkExperience()){
             levelUP();
         }
-        */
-        GameTickSingleton.getInstance().getValue().killedAnEnemy(this, Visited);
+        //GameTickSingleton.getInstance().getValue().killedAnEnemy(this, Visited);
+        pray.setAsDead();
     }
-    @Override
-    public void setAsDead(){
-        isDead = true;
-        super.setAsDead();
-    }
-
-
-
-
+    
     public int GetLevel(){
         return Level;
     }
@@ -68,11 +52,9 @@ public abstract class Player extends Unit implements HeroicUnit {
 
     @Override
     public String toString(){
-        return getUnitName() + "\tHealth: " + getHealth().getCurrent() + "/" + getHealth().getMax() + "\\tAttack: " + getAP() + "\\tDefense: "+ getDP() +"\\tLevel : " + Level + "\\tXP: " + XP.getCurrent() + "/" + XP.getMax();
+        return super.toString() + "\tLevel: " + Level + "\tXP: " + XP.getCurrent() + "/" + XP.getMax();
     }
 
-    public boolean isDead() {
-        return isDead;
-    }
+    public abstract void regainAbility();
 }
 

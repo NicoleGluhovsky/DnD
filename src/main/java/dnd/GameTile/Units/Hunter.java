@@ -1,5 +1,6 @@
 package dnd.GameTile.Units;
 
+import Controller.GameTickSingleton;
 import dnd.UnitManagment.Bars.MagicNumbers;
 
 public class Hunter extends Player{
@@ -24,7 +25,6 @@ public class Hunter extends Player{
     public void castAbility(){
         if (arrowCount > 0){
             Shoot();
-            arrowCount --;
         }
     }
 
@@ -38,14 +38,31 @@ public class Hunter extends Player{
 
     public void Shoot(){
         //choose how to attack
-        Enemy enemy = null;
+        Enemy enemy = GameTickSingleton.getInstance().getValue().getClosesetEnemy();
         //attack
-        combat.AbilityAttack(this, enemy, AbilityDamage()); 
+        if(InRange(enemy, this.range)){
+            mc.send(getUnitName() + " fired an arrow at " + enemy.getUnitName() + ".");
+            combat.AbilityAttack(this, enemy, AbilityDamage()); 
+            arrowCount --;
+        }
+        else{
+            mc.send(getUnitName() + " tried to shoot an arrow but there were no enemies in range.");
+        }
+    }
+    @Override
+    public void regainAbility(){
+        if(tickCount == 10){
+            tickCount = 0;
+            arrowCount += GetLevel();
+        }
+        else{
+            tickCount++;
+        }
     }
 
     @Override
     public String toString(){
-        return super.toString() + "\\tArrows: " + arrowCount + "\\tRange: " + range;
+        return super.toString() + "\tArrows: " + arrowCount + "\tRange: " + range;
     }
 
 }

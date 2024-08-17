@@ -23,4 +23,8 @@ public class AbilityBar extends Bar{
         }
         return false;
     }
+
+    public void regain(int m){
+        this.current = Math.min(max, current + m);
+    }
 }

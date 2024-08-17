@@ -1,15 +1,16 @@
 package dnd.GameTile;
 import dnd.UnitManagment.Bars.MagicChars;
+import View.CLIManagement.MessageCallBack;
 
 
 public class Wall extends Tile{
-    public Wall(Point pos){
-        super(MagicChars.WALL.getSymbol(), pos);
+    public Wall(Point pos, MessageCallBack mc){
+        super(MagicChars.WALL.getSymbol(), pos, mc);
     }
 
     @Override
     public void AttackTile(Unit unit){
-        throw new UnsupportedOperationException("Cannot attack a wall");
+        mc.send("Cannot attack a wall");
     }
 
 }

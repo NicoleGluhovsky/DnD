@@ -1,7 +1,10 @@
 package dnd.GameTile.Units;
 
+import Controller.GameTickSingleton;
 import dnd.UnitManagment.Bars.AbilityBar;
 import dnd.UnitManagment.Bars.MagicNumbers;
+import java.util.List;
+import java.util.Random;
 
 public class Warrior extends Player{
     private final AbilityBar abilityBar; //current will be the remaining cooldown. max will be the cooldown time. each game tick will increase current by 1.
@@ -29,11 +32,19 @@ public class Warrior extends Player{
         }
     }
 
-    private void AvengersShield(){
-        //deal 10% of max health to all enemies in range
-        Enemy enemy = null;
+    @Override
+    public void regainAbility(){
+        abilityBar.setCurrent(abilityBar.getCurrent() + 1);
+    }
 
-        combat.AvengersShield(this, enemy);
+    private void AvengersShield(){
+        Random rnd = new Random();
+        List<Enemy> enemies = GameTickSingleton.getInstance().getValue().getEnemiesInRange(MagicNumbers.THREE.getValue());
+        Enemy enemy = enemies.get(rnd.nextInt(enemies.size()));
+        int heal = MagicNumbers.TEN.getValue() * this.getDP();
+        this.Heal(heal);
+        mc.send(this.getUnitName() + " used Avenger's Shield, healing for "+ heal);
+        combat.AbilityAttack(this, enemy, AbilityDamage());
     }
     
     @Override
@@ -43,7 +54,7 @@ public class Warrior extends Player{
 
     @Override
     public String toString(){
-        return super.toString() + "\\tAbility Cooldown: " + abilityBar.getCurrent() + "/" + abilityBar.getMax();
+        return super.toString() + "\tAbility Cooldown: " + abilityBar.getCurrent() + "/" + abilityBar.getMax();
     }
 
 }

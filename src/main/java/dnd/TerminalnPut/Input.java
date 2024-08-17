@@ -3,13 +3,11 @@ package dnd.TerminalnPut;
 import java.util.Scanner;
 
 import View.CLI;
+import dnd.UnitManagment.Bars.Directions;
 
 public class Input {
     private final CLI cli = new CLI();
     private final Scanner scanner = new Scanner(System.in);
-    public enum Direction {
-        UP, DOWN, LEFT, RIGHT;
-    }
 
     public Input() {}
 
@@ -17,21 +15,21 @@ public class Input {
         return scanner.nextInt();
     }
 
-    public Direction getInputChar() {
+    public Directions getInputChar() {
         while(true){
             char diraction = scanner.next().charAt(0);
             switch (diraction) {
                 case 'w' -> {
-                    return Direction.UP;
+                    return Directions.UP;
                 }
                 case 'a' -> {
-                    return Direction.LEFT;
+                    return Directions.LEFT;
                 }
                 case 's' -> {
-                    return Direction.DOWN;
+                    return Directions.DOWN;
                 }
                 case 'd' -> {
-                    return Direction.RIGHT;
+                    return Directions.RIGHT;
                 }
                 default -> cli.display("Error: Invalid input. Please enter 'w', 'a', 's', or 'd'.");
             }

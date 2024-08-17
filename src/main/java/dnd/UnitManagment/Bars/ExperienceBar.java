@@ -9,10 +9,8 @@ public class ExperienceBar extends Bar{
         this.current += experience;
     }
 
-    public void checkExperience(){
-        if(this.current > this.max){
-            this.current = 0;
-        }
+    public boolean checkExperience(){
+        return this.current >= this.max;
     }
 
 }

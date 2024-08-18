@@ -40,6 +40,7 @@ public abstract class Enemy extends Unit{
 
     @Override
     public void kill(Player luser){
+        mc.send(luser.getUnitName() + " was killed by. " + getUnitName() + ".");
         luser.setAsDead();
     }
 

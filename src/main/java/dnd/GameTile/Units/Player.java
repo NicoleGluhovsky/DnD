@@ -4,16 +4,22 @@ import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.ExperienceBar;
 import dnd.UnitManagment.Bars.MagicChars;
 import dnd.UnitManagment.Bars.MagicNumbers;
+import View.CLI;
 
 
 public abstract class Player extends Unit implements HeroicUnit {
     private final ExperienceBar XP;
-    private  int Level;
+    private int Level;
+    private CLI cli;
 
     public Player(String name, int health, int AP, int DP){
         super(MagicChars.PLAYER.getSymbol(), name, health, AP, DP);
         Level = 1;
         XP = new ExperienceBar(0 ,MagicNumbers.FIFTY.getValue()*Level);
+    }
+
+    public void init(CLI cli){
+        this.cli = cli;
     }
 
     @Override       
@@ -29,10 +35,10 @@ public abstract class Player extends Unit implements HeroicUnit {
     @Override
     public void kill(Enemy pray){
         XP.gainExperience(pray.getXP());
-        if(XP.checkExperience()){
+        mc.send(pray.getUnitName() + " died, " + getUnitName() + " gained " +pray.getXP()+ " experience");
+        while(XP.checkExperience()){
             levelUP();
         }
-        //GameTickSingleton.getInstance().getValue().killedAnEnemy(this, Visited);
         pray.setAsDead();
     }
     
@@ -44,17 +50,26 @@ public abstract class Player extends Unit implements HeroicUnit {
         XP.setCurrent(0);
         Level++;
         XP.setMax(MagicNumbers.FIFTY.getValue() * Level);
-        getHealth().setMax(getHealth().getMax() + MagicNumbers.TEN.getValue() * Level);
+
+        int healthButh = getHealth().getMax();
+        getHealth().setMax(getHealth().getMax() + healthButh);
         getHealth().setCurrent(getHealth().getMax());
-        super.setAP(super.getAP() + MagicNumbers.FOUR.getValue() * Level);
-        super.setDP(super.getDP() + MagicNumbers.ONE.getValue() * Level);
+
+        int APButh = MagicNumbers.FOUR.getValue() * Level;
+        super.setAP(super.getAP() + APButh);
+
+        int DPButh = MagicNumbers.ONE.getValue() * Level;
+        super.setDP(super.getDP() + DPButh);
+
+        cli.displayLevelUp(this, healthButh, APButh, DPButh);
     }
+    
+    public abstract void regainAbility();
 
     @Override
     public String toString(){
         return super.toString() + "\tLevel: " + Level + "\tXP: " + XP.getCurrent() + "/" + XP.getMax();
     }
 
-    public abstract void regainAbility();
 }
 

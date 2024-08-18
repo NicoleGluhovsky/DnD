@@ -5,7 +5,5 @@ public class Main {
         System.out.println("In Main\n\n\n");
         GameSetup game = new GameSetup();
         game.Run();
-
-        
     }
 }

@@ -4,6 +4,7 @@ import View.CLIManagement.MessageCallBack;
 import View.CLIManagement.DeathCallBack;
 import dnd.GameTile.TileFactory;
 import dnd.GameTile.Unit;
+import dnd.GameTile.Units.Player;
 
 public abstract class view implements MessageCallBack, DeathCallBack {
 
@@ -19,7 +20,7 @@ public abstract class view implements MessageCallBack, DeathCallBack {
             for (int j = 0; j < board1.length; j++) {
                 row += board1[j];
             }
-            display(row);
+            send(row);
         }
     }
 
@@ -27,16 +28,16 @@ public abstract class view implements MessageCallBack, DeathCallBack {
         TileFactory tileFactory = new TileFactory();
         String[] characters = tileFactory.getAllPlayerTypes();
         for (int i = 0; i < characters.length; i++) {
-            display((i+1) + " " + characters[i]);
+            send((i+1) + " " + characters[i]);
         }
     }
 
     public void displayCombat(Unit Attaker, Unit Attacked, int attackPower, int defensePoints) {
       
-        display(Attaker.getUnitName() + " engaged in combat with " + Attacked.getUnitName() + ".");
-        display(Attaker.toString());
-        display(Attacked.toString());
-        display(Attaker.getUnitName() + " rolled " + attackPower + " attack points.");
+        send(Attaker.getUnitName() + " engaged in combat with " + Attacked.getUnitName() + ".");
+        send(Attaker.toString());
+        send(Attacked.toString());
+        send(Attaker.getUnitName() + " rolled " + attackPower + " attack points.");
         display(Attacked.getUnitName() + " rolled " + defensePoints + " defense points.");
         display(Attaker.getUnitName() + " dealt " + (attackPower-defensePoints) + " damage to " + Attacked.getUnitName() + ".");
 
@@ -56,9 +57,12 @@ public abstract class view implements MessageCallBack, DeathCallBack {
         onDeath();
     }
 
+    public void displayLevelUp(Player player, int healthButh, int attackButh, int defenseButh) {
+        display(player.getUnitName() + " reached level " + player.GetLevel() + ": +" + healthButh + " Health, +" + attackButh + " Attack, +" + defenseButh + " Defense");}
+
     @Override
     public void onDeath(){
-        display("You Lost.");
+        display("You Lost.\n_______Game Over_______");
     }
 
     @Override

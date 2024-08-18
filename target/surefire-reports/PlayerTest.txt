@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: PlayerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.135 s <<< FAILURE! - in PlayerTest
+MovePlayer(PlayerTest)  Time elapsed: 0.054 s  <<< ERROR!
+java.lang.NullPointerException: Cannot read field "x" because "other" is null
+	at PlayerTest.MovePlayer(PlayerTest.java:40)
+

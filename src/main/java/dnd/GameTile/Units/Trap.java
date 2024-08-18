@@ -7,7 +7,7 @@ public class Trap extends Enemy{
     private final int visibilityTime;
     private final int invisibilityTime;
     private int tickCount;
-    //private boolean visible;
+    private boolean visible;
     private final double TRAPRANGE = 2.0;
 
     public Trap(char tileChar, String name, int health, int AP, int DP, int xp, int visibilityTime, int invisibilityTime, int tickCount, boolean visible){
@@ -16,7 +16,7 @@ public class Trap extends Enemy{
         this.visibilityTime = visibilityTime;
         this.invisibilityTime = invisibilityTime;
         this.tickCount = tickCount;
-        //this.visible = visible;
+        this.visible = visible;
     }
 
     @Override
@@ -29,24 +29,30 @@ public class Trap extends Enemy{
 
     @Override
     public void noticePlayer(Player player, MoveUnit moveUnit){
+        changeTileVisibility(true);
+        tickCount = 0;
         player.takeHit(this.getAP());
     }
 
+    @Override
+    public boolean takeHit(int damage)
+    {
+        tickCount = 0;
+        changeTileVisibility(true);
+        return this.getHealth().takeDamage(damage);
+    } 
+
     public void changeVisibilityState(){
-        //visible = tickCount < visibilityTime;
+        if(visible != tickCount < visibilityTime){
+            visible = !visible;
+            changeTileVisibility(visible);
+        }
+         
         if (visibilityTime + invisibilityTime == tickCount) {
             tickCount = 0;
-            changeTileVisibility();
-        }
-        else if (tickCount == visibilityTime){
-            changeTileVisibility();
         }
         else {
             tickCount++;
         }
-    }
-
-    public boolean checkVisibilityChanged(){
-        return tickCount == visibilityTime || tickCount == 0;
     }
 }

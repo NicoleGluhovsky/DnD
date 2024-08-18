@@ -1,21 +1,14 @@
 package dnd.GameTile;
 import java.util.Random;
-
-import org.w3c.dom.html.HTMLLabelElement;
-
 import View.CLI;
-
-import dnd.GameTile.Units.Warrior;
-import dnd.UnitManagment.Bars.MagicNumbers;
 
 public class Combat{
     private final Random random = new Random();
     private final CLI cli;
+
     public Combat(CLI cli){
         this.cli = cli;
     }
-
-
 
     public void Attack(Unit Attaker, Unit Attacked){
         int attackPower = getRandomAP(Attaker);

@@ -23,7 +23,7 @@ public class MoveUnit {
         nextPos.Move(direction);
         // chack what is on next tile
         Tile nextTile = GameTickSingleton.getInstance().getValue().getTileValue(nextPos);
-        char nextTileChar = nextTile.getTileChar();
+        char nextTileChar = nextTile.getHiddenChar();
         char thisTileChar = U.getTileChar();
         switch (nextTileChar) {
             case '#' -> {

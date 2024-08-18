@@ -17,12 +17,12 @@ import dnd.GameTile.TileFactory;
 import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Player;
 import dnd.GameTile.Wall;
-import dnd.UnitManagment.Bars.MagicNumbers;
+import dnd.UnitManagment.Bars.Directions;
 
 
 
 public final class GameTick{
-    TileFactory factory = new TileFactory();
+    protected TileFactory factory = new TileFactory();
     private TreeMap<Point, Tile> gameLevel;
     private Player player;
     private final List<Enemy> enemies = new ArrayList<>();
@@ -31,12 +31,13 @@ public final class GameTick{
     private int maxY;
     private MessageCallBack mc;
     private DeathCallBack dc;
-    private final int MaxLevel = MagicNumbers.FOUR.getValue();
+    private int MaxLevel;
     private Combat combat;
 
     public GameTick(Player player, int level){
         this.level = level;
         this.player = player;
+        this.MaxLevel = getLevelCount();
     }
 
     public void init(MessageCallBack mc, DeathCallBack dc, Combat combat){
@@ -55,12 +56,14 @@ public final class GameTick{
         LoadBoardLevel();
     }
 
-    private boolean LevelUp(){
+    private boolean NextLevel(){
         level++;
         if(level <= MaxLevel){
+            mc.send("Next Level: " + level);
             LoadBoardLevel();
             return false;
         }
+        mc.send("_________You have won the game_________");
         return true;
     }
 
@@ -127,8 +130,15 @@ public final class GameTick{
         return gameLevel.get(pos);
     }
 
+    private int getLevelCount(){
+        String path = "src\\main\\java\\dnd\\recorces\\Levels";
+        return new java.io.File(path).listFiles().length;
+    }
+
     private List<String> readLevelFile(int level){
-        String path = "src/main/resources/Levels/level";
+        //String path = "DnD/src/main/resources/Levels/level";
+        String path = "src\\main\\java\\dnd\\recorces\\Levels\\level";
+
         String filePath = path + level + ".txt";
 
         List<String> lines;
@@ -141,8 +151,13 @@ public final class GameTick{
         return lines;
     }
 
-    public void killedAnEnemy(Enemy rip){
-        swapPosition(player, new EmptySpace(rip.getPosition(), mc));
+    public void killedAnEnemy(Enemy rip, Directions direction){
+        if(direction != Directions.CASTABILITY){
+            swapPosition(player, new EmptySpace(rip.getPosition(), mc));
+        }
+        else{
+            gameLevel.put(rip.getPosition(), new EmptySpace(rip.getPosition(), mc));
+        }
         enemies.remove(rip);
     }
     
@@ -171,14 +186,18 @@ public final class GameTick{
     }
     boolean status(){
         if(winLevel()) {
-            return LevelUp();
+            return NextLevel();
         }
         return lose();
     }
 
 
     private boolean lose(){
-        return player.isDead();
+        if(player.isDead()){
+            dc.onDeath();
+            return true;
+        }
+        return false;
     }
 
     private boolean winLevel(){
@@ -211,6 +230,3 @@ public final class GameTick{
 
 
 }
-
-//observable - tick counter
-//observers - everyone else

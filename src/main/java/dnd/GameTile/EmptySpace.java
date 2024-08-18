@@ -1,7 +1,7 @@
 package dnd.GameTile;
 
-import dnd.UnitManagment.Bars.MagicChars;
 import View.CLIManagement.MessageCallBack;
+import dnd.UnitManagment.MagicChars;
 
 
 public class EmptySpace extends Tile{

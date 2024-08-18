@@ -1,6 +1,2 @@
-dnd\GameTile\Point$1.class
-View\CLI.class
-View\CLIManagement\DeathCallBack.class
-View\CLIManagement\MessageCallBack.class
-View\view.class
-Input\PlayerTurn$1.class
+Input/PlayerTurn$1.class
+dnd/GameTile/Point$1.class

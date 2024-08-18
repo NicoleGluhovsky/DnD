@@ -3,7 +3,7 @@ package Input;
 import java.util.Scanner;
 
 import View.CLIManagement.MessageCallBack;
-import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Directions;
 
 
 public class TerminalInput {

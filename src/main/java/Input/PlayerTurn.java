@@ -2,7 +2,7 @@ package Input;
 
 import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.Units.Player;
-import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Directions;
 
 public class PlayerTurn extends Turn {
     private final TerminalInput terminalInput;
@@ -22,8 +22,8 @@ public class PlayerTurn extends Turn {
         player.regainAbility();
         switch (diraction){
             case SKIP -> mc.send("You skipped your turn");
-            case CASTABILITY -> player.castAbility();
-            default -> moveUnit.Move(player, diraction);
+            case CASTABILITY -> {player.castAbility();System.out.println("you chose Ability");}
+            default -> {moveUnit.Move(player, diraction); System.out.println("you chose to move");}
         }
     }
     public Directions getDirection(){

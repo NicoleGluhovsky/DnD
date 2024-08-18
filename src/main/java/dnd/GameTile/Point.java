@@ -1,7 +1,7 @@
 package dnd.GameTile;
 
-import dnd.UnitManagment.Bars.Directions;
-import View.CLIManagement.MessageCallBack;    
+import View.CLIManagement.MessageCallBack;
+import dnd.UnitManagment.Directions;    
 public class Point implements Comparable<Point>{
     private int x;
     private int y;
@@ -33,7 +33,7 @@ public class Point implements Comparable<Point>{
     protected void setY(int y){
         this.y = y;
     }
-    protected void Move(Directions direction){
+    public void Move(Directions direction){
         switch (direction) {
             case UP -> setY(getY() - 1);
             case DOWN -> setY(getY() + 1);
@@ -71,6 +71,19 @@ public class Point implements Comparable<Point>{
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || ! (other instanceof Point)) {
+            return false;
+        }
+        Point otherPoint = (Point) other;
+        return x == otherPoint.x && y == otherPoint.y;
     }
     
 }

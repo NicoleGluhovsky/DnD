@@ -6,19 +6,12 @@ public class HealthBar extends Bar{
     }
 
     public boolean takeDamage(int damage){
-        this.current -= damage;
-        return handleDeath();
+        this.current = Math.max(0,current - damage);
+        return current == 0;
     }
 
     public void heal(int heal){
         this.current = Math.min(current+heal, max);
     }
 
-    public boolean handleDeath(){
-        if(this.current <= 0){
-            this.current = 0;
-            return true;
-        }
-        return false;
-    }
 }

@@ -11,8 +11,7 @@ import View.CLIManagement.DeathCallBack;
 import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.Combat;
 import dnd.GameTile.Units.Enemy;
-import dnd.UnitManagment.Bars.Directions;
-import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Directions;
 
 
 public class GameSetup {

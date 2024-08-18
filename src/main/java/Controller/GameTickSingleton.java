@@ -2,7 +2,7 @@ package Controller;
 
 import dnd.GameTile.TileFactory;
 import dnd.GameTile.Units.Player;
-import dnd.UnitManagment.Bars.MagicNumbers;
+import dnd.UnitManagment.MagicNumbers;
 
 public class GameTickSingleton {
     private static final TileFactory factory = new TileFactory();

@@ -1,9 +1,10 @@
 package dnd.GameTile.Units;
 
-import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.MagicNumbers;
-import Controller.GameTickSingleton;
 import java.util.List;
+
+import Controller.GameTickSingleton;
+import dnd.UnitManagment.Bars.AbilityBar;
+import dnd.UnitManagment.MagicNumbers;
 
 public class Rogue extends Player{
 

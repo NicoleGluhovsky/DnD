@@ -15,7 +15,7 @@ import dnd.GameTile.Units.Player;
 import dnd.GameTile.Units.Rogue;
 import dnd.GameTile.Units.Trap;
 import dnd.GameTile.Units.Warrior;
-import dnd.UnitManagment.Bars.MagicChars;
+import dnd.UnitManagment.MagicChars;
 
 public class TileFactory {
     private Player p;

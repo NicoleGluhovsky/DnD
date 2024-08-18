@@ -17,7 +17,7 @@ import dnd.GameTile.TileFactory;
 import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Player;
 import dnd.GameTile.Wall;
-import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Directions;
 
 
 
@@ -37,13 +37,14 @@ public final class GameTick{
     public GameTick(Player player, int level){
         this.level = level;
         this.player = player;
-        this.MaxLevel = getLevelCount();
+
     }
 
     public void init(MessageCallBack mc, DeathCallBack dc, Combat combat){
         this.mc = mc;
         this.dc = dc;
         this.combat = combat;
+        this.MaxLevel = getLevelCount();
         LoadBoardLevel();
     }
 
@@ -131,13 +132,21 @@ public final class GameTick{
     }
 
     private int getLevelCount(){
-        String path = "src\\main\\java\\dnd\\recorces\\Levels";
-        return new java.io.File(path).listFiles().length;
+        //String path = "src\\main\\java\\dnd\\recorces\\Levels";
+        //String path = "DnD/src/main/resources/Levels";
+        String path = "/Users/ranbrachel/Desktop/university/simester_2/OOP/Assintment 3/DND/DnD/src/main/resources/Levels";
+        try {
+            return new java.io.File(path).listFiles().length;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
     }
 
     private List<String> readLevelFile(int level){
         //String path = "DnD/src/main/resources/Levels/level";
-        String path = "src\\main\\java\\dnd\\recorces\\Levels\\level";
+        //String path = "src\\main\\java\\dnd\\recorces\\Levels\\level";
+        String path = "/Users/ranbrachel/Desktop/university/simester_2/OOP/Assintment 3/DND/DnD/src/main/resources/Levels/level";
 
         String filePath = path + level + ".txt";
 

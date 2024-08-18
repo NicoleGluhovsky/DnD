@@ -1,10 +1,11 @@
 package dnd.GameTile.Units;
 
-import Controller.GameTickSingleton;
-import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.MagicNumbers;
 import java.util.List;
 import java.util.Random;
+
+import Controller.GameTickSingleton;
+import dnd.UnitManagment.Bars.AbilityBar;
+import dnd.UnitManagment.MagicNumbers;
 
 public class Warrior extends Player{
     private final AbilityBar abilityBar; //current will be the remaining cooldown. max will be the cooldown time. each game tick will increase current by 1.
@@ -12,7 +13,7 @@ public class Warrior extends Player{
 
     public Warrior(String name, int health, int AP, int DP, int abilityCooldown){
         super(name, health, AP, DP);
-        this.abilityBar = new AbilityBar(MagicNumbers.ZERO.getValue(), abilityCooldown, abilityCooldown);
+        this.abilityBar = new AbilityBar(abilityCooldown, abilityCooldown, abilityCooldown);
     }
 
     @Override
@@ -30,21 +31,28 @@ public class Warrior extends Player{
             abilityBar.setCurrent(MagicNumbers.ZERO.getValue());
             AvengersShield();
         }
+        else{
+            mc.send(getUnitName() + " is on cooldown");
+        }
     }
 
     @Override
     public void regainAbility(){
-        abilityBar.setCurrent(abilityBar.getCurrent() + 1);
+        abilityBar.regain(1);
     }
 
     private void AvengersShield(){
         Random rnd = new Random();
         List<Enemy> enemies = GameTickSingleton.getInstance().getValue().getEnemiesInRange(MagicNumbers.THREE.getValue());
-        Enemy enemy = enemies.get(rnd.nextInt(enemies.size()));
         int heal = MagicNumbers.TEN.getValue() * this.getDP();
         this.Heal(heal);
         mc.send(this.getUnitName() + " used Avenger's Shield, healing for "+ heal);
-        combat.AbilityAttack(this, enemy, AbilityDamage());
+        if(!enemies.isEmpty()){
+            Enemy enemy = enemies.get(rnd.nextInt(enemies.size()));
+            combat.AbilityAttack(this, enemy, AbilityDamage());
+            System.out.println("after ability");
+        }
+       
     }
     
     @Override

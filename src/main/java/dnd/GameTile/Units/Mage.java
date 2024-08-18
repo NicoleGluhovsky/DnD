@@ -5,7 +5,7 @@ import java.util.List;
 
 import Controller.GameTickSingleton;
 import dnd.UnitManagment.Bars.AbilityBar;
-import dnd.UnitManagment.Bars.MagicNumbers;
+import dnd.UnitManagment.MagicNumbers;
 
 
 public class Mage extends Player{

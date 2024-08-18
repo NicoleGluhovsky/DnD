@@ -128,7 +128,7 @@ public final class GameTick{
     }
 
     private List<String> readLevelFile(int level){
-        String path = "src/main/resources/Levels/level";
+        String path = "DnD/src/main/resources/Levels/level";
         String filePath = path + level + ".txt";
 
         List<String> lines;

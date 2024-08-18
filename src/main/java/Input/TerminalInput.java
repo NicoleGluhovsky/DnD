@@ -1,8 +1,9 @@
 package Input;
 
 import java.util.Scanner;
-import dnd.UnitManagment.Bars.Directions;
+
 import View.CLIManagement.MessageCallBack;
+import dnd.UnitManagment.Bars.Directions;
 
 
 public class TerminalInput {
@@ -21,8 +22,8 @@ public class TerminalInput {
     }
     
     public Directions getDirection(){
-        char character = scanner.next().charAt(0);
         while(true){
+            char character = scanner.next().charAt(0);
              switch (character){
                 case 'w' -> {
                     return Directions.UP;

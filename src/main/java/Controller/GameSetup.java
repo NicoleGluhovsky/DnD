@@ -3,13 +3,14 @@ package Controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import Input.PlayerTurn;
 import Input.EnemyTurn;
+import Input.PlayerTurn;
 import Input.TerminalInput;
 import View.CLI;
-import View.CLIManagement.*;
-import dnd.GameTile.Units.Enemy;
+import View.CLIManagement.DeathCallBack;
+import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.Combat;
+import dnd.GameTile.Units.Enemy;
 
 public class GameSetup {
         private final CLI cli;

@@ -16,12 +16,9 @@ public class PlayerTurn extends Turn {
         player.regainAbility();
         Directions dir = terminalInput.getDirection();
         switch (dir){
-            case SKIP:
-                mc.send("You skipped your turn");
-            case CASTABILITY:
-                player.castAbility();
-            default:
-                moveUnit.Move(player, dir);
+            case SKIP -> mc.send("You skipped your turn");
+            case CASTABILITY -> player.castAbility();
+            default -> moveUnit.Move(player, dir);
         }
     }
 }

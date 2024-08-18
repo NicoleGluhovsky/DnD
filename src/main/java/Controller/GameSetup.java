@@ -11,14 +11,17 @@ import View.CLIManagement.DeathCallBack;
 import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.Combat;
 import dnd.GameTile.Units.Enemy;
+import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Bars.Directions;
+
 
 public class GameSetup {
-        private final CLI cli;
         private final MessageCallBack mc;
         private final DeathCallBack dc;
         private final Combat combat;
-
+        private final CLI cli;
         private final TerminalInput input;
+        private GameTick game;
 
         public GameSetup() {
                 cli = new CLI();
@@ -28,7 +31,6 @@ public class GameSetup {
                 input = new TerminalInput(mc);
 
         }
-        private GameTick game;
 
         public void initiate(){
 
@@ -48,6 +50,7 @@ public class GameSetup {
                 // create game object
                 game = GameTickSingleton.getInstance(PlayerID).getValue();
                 game.init(mc, dc, combat);
+                game.getPlayer().init(cli);
 
                 
         }
@@ -62,27 +65,32 @@ public class GameSetup {
                         cli.displayBoard(game.toDisplay());
                         // display game state
                         String gameState = game.getGameState();
-                        cli.display(gameState);
+                        mc.send(gameState);
 
 
                         //process next Tick
                         // process player turn
                         PlayerTurn playerTurn = new PlayerTurn(game.getPlayer(), mc); 
-                        playerTurn.play();
+                        Directions d = playerTurn.chooseMove();
+                        playerTurn.play(d);
 
 
                         // process enemys turn
                         List<Enemy> deadEnemies = new ArrayList<>();
+
                         for (Enemy e : game.getEnemies()){
-                                if(e.isDead()){ deadEnemies.add(e); }
+                                if(e.isDead()){
+                                        deadEnemies.add(e); 
+                                        }
                                 else{
                                         EnemyTurn enemyTurn = new EnemyTurn(game.getPlayer(),e, mc);
                                         enemyTurn.play();
                                 }    
                         }
+
                         
                         for (Enemy e : deadEnemies){
-                                game.killedAnEnemy(e);
+                                game.killedAnEnemy(e, playerTurn.getDirection());
                         }
                 
                         // check if game ends
@@ -91,7 +99,6 @@ public class GameSetup {
 
 
                 }
-                System.out.println("Game Over");
                 // game ends
         }
 }

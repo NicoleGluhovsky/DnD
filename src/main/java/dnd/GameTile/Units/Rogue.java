@@ -40,6 +40,7 @@ public class Rogue extends Player{
         mc.send(getUnitName() + " cast Fan of Knives.");
         List<Enemy> enemies = GameTickSingleton.getInstance().getValue().getEnemiesInRange(MagicNumbers.TWO.getValue());
         for (Enemy e : enemies){
+
             combat.AbilityAttack(this, e, AbilityDamage());
         }
     }

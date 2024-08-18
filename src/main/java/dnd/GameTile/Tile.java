@@ -21,10 +21,13 @@ public abstract class Tile{
     }
     protected Tile(char tileChar){
         this.tileChar = tileChar;
-        this.charBackup = MagicChars.EMPTYSPACE.getSymbol();
+        this.charBackup = tileChar;
     }
     protected void setPlayerAsDead(){
         this.tileChar = MagicChars.DEAD.getSymbol();
+    }
+    public char getHiddenChar(){
+        return this.charBackup;
     }
 
     public void changeTileVisibility(boolean visible){

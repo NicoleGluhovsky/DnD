@@ -1,0 +1,16 @@
+# Created at 2024-08-18T13:34:01.889
+[SUREFIRE] std/in stream corrupted
+java.io.IOException: Command NOOP unexpectedly read Void data with length 4.
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:130)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1623)
+
+
+# Created at 2024-08-18T13:42:32.805
+Unexpected IOException: 7,1,PlayerTest,choosePlayer(PlayerTest),null,null,null,null,PlayerTest.choosePlayer:36 \00BB InputMismatch,java.util.InputMismatchException\000A\0009at PlayerTest.choosePlayer(PlayerTest.java:36)\000A
+
+
+# Created at 2024-08-18T13:42:32.809
+Unexpected IOException: 2,1,org.apache.maven.surefire.junit4.JUnit4Provider,PlayerTest,null,null,null
+
+

@@ -11,7 +11,7 @@ public class GameTickSingleton {
     private static Player player;
 
 
-    public GameTickSingleton(Player p){
+    private  GameTickSingleton(Player p){
         value = new GameTick(p, MagicNumbers.ONE.getValue());
     }
 

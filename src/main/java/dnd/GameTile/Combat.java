@@ -1,16 +1,14 @@
 package dnd.GameTile;
 import java.util.Random;
-
 import View.CLI;
 
 public class Combat{
     private final Random random = new Random();
     private final CLI cli;
+
     public Combat(CLI cli){
         this.cli = cli;
     }
-
-
 
     public void Attack(Unit Attaker, Unit Attacked){
         int attackPower = getRandomAP(Attaker);

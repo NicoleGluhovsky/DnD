@@ -22,7 +22,6 @@ public class Trap extends Enemy{
     @Override
     public void checkRange(Player player, MoveUnit moveUnit){
         changeVisibilityState();
-        changeTileVisibility(visible);
         if((this.getPosition().Range(player.getPosition())) < this.getRange()){
             noticePlayer(player, moveUnit);
         }
@@ -30,23 +29,30 @@ public class Trap extends Enemy{
 
     @Override
     public void noticePlayer(Player player, MoveUnit moveUnit){
+        changeTileVisibility(true);
+        tickCount = 0;
         player.takeHit(this.getAP());
     }
 
+    @Override
+    public boolean takeHit(int damage)
+    {
+        tickCount = 0;
+        changeTileVisibility(true);
+        return this.getHealth().takeDamage(damage);
+    } 
+
     public void changeVisibilityState(){
-        visible = tickCount < visibilityTime;
-        if(tickCount == 0){
-            System.out.println("waw");
+        if(visible != tickCount < visibilityTime){
+            visible = !visible;
+            changeTileVisibility(visible);
         }
+         
         if (visibilityTime + invisibilityTime == tickCount) {
             tickCount = 0;
         }
         else {
             tickCount++;
         }
-    }
-
-    public boolean checkVisibilityChanged(){
-        return tickCount == visibilityTime || tickCount == 0;
     }
 }

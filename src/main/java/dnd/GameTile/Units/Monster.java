@@ -1,7 +1,7 @@
 package dnd.GameTile.Units;
 
-import dnd.UnitManagment.Bars.Directions;
 import dnd.GameTile.MoveUnit;
+import dnd.UnitManagment.Directions;
 
 public class Monster extends Enemy {
 

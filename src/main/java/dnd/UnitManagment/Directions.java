@@ -1,4 +1,4 @@
-package dnd.UnitManagment.Bars;
+package dnd.UnitManagment;
 
 public enum Directions {
     UP,

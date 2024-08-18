@@ -1,8 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: PlayerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.135 s <<< FAILURE! - in PlayerTest
-MovePlayer(PlayerTest)  Time elapsed: 0.054 s  <<< ERROR!
-java.lang.NullPointerException: Cannot read field "x" because "other" is null
-	at PlayerTest.MovePlayer(PlayerTest.java:40)
+Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.07 s <<< FAILURE! - in PlayerTest
+castAbility(PlayerTest)  Time elapsed: 0.003 s  <<< FAILURE!
+java.lang.AssertionError: Values should be different. Actual: 0
+	at PlayerTest.castAbility(PlayerTest.java:133)
+
+PlayerDie(PlayerTest)  Time elapsed: 0.002 s  <<< FAILURE!
+java.lang.AssertionError
+	at PlayerTest.PlayerDie(PlayerTest.java:149)
 

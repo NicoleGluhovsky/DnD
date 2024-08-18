@@ -1,11 +1,11 @@
 package dnd.GameTile;
 
 
+import View.CLIManagement.DeathCallBack;
+import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Player;
 import dnd.UnitManagment.Bars.HealthBar;
-import View.CLIManagement.DeathCallBack;
-import View.CLIManagement.MessageCallBack;
 
 public abstract class Unit extends Tile{
     private final String Name;
@@ -48,11 +48,11 @@ public abstract class Unit extends Tile{
         return isDead;
     }
 
-    protected HealthBar getHealth(){
+    public HealthBar getHealth(){
         return Health;
     }
 
-    protected int getAP(){
+    public int getAP(){
         return AttackPoints;
     }
 
@@ -60,7 +60,7 @@ public abstract class Unit extends Tile{
         this.AttackPoints = AP;
     }
 
-    protected int getDP(){
+    public int getDP(){
         return DefensePoints;
     }
 
@@ -70,7 +70,8 @@ public abstract class Unit extends Tile{
 
     public boolean takeHit(int damage)
     {
-        return this.Health.takeDamage(damage);
+        boolean b = this.Health.takeDamage(damage);
+        return b;
     } 
 
     public void Heal(int heal){

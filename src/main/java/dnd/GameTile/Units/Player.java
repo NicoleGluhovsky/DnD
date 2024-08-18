@@ -1,10 +1,10 @@
 package dnd.GameTile.Units;
 
+import View.CLI;
 import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.ExperienceBar;
-import dnd.UnitManagment.Bars.MagicChars;
-import dnd.UnitManagment.Bars.MagicNumbers;
-import View.CLI;
+import dnd.UnitManagment.MagicChars;
+import dnd.UnitManagment.MagicNumbers;
 
 
 public abstract class Player extends Unit implements HeroicUnit {
@@ -16,6 +16,10 @@ public abstract class Player extends Unit implements HeroicUnit {
         super(MagicChars.PLAYER.getSymbol(), name, health, AP, DP);
         Level = 1;
         XP = new ExperienceBar(0 ,MagicNumbers.FIFTY.getValue()*Level);
+    }
+
+    public ExperienceBar getXP(){
+        return XP;
     }
 
     public void init(CLI cli){
@@ -47,7 +51,7 @@ public abstract class Player extends Unit implements HeroicUnit {
     }
     
     public void levelUP(){
-        XP.setCurrent(0);
+        XP.setCurrent(XP.getCurrent() - XP.getMax());
         Level++;
         XP.setMax(MagicNumbers.FIFTY.getValue() * Level);
 

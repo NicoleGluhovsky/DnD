@@ -29,18 +29,9 @@ public class Trap extends Enemy{
 
     @Override
     public void noticePlayer(Player player, MoveUnit moveUnit){
-        changeTileVisibility(true);
-        tickCount = 0;
         player.takeHit(this.getAP());
     }
 
-    @Override
-    public boolean takeHit(int damage)
-    {
-        tickCount = 0;
-        changeTileVisibility(true);
-        return this.getHealth().takeDamage(damage);
-    } 
 
     public void changeVisibilityState(){
         if(visible != tickCount < visibilityTime){

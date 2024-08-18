@@ -2,7 +2,7 @@ package dnd.GameTile;
 
 
 import View.CLIManagement.MessageCallBack;
-import dnd.UnitManagment.Bars.MagicChars;
+import dnd.UnitManagment.MagicChars;
 
 public abstract class Tile{
     private char tileChar;

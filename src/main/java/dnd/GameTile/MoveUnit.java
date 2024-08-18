@@ -3,7 +3,7 @@ package dnd.GameTile;
 import java.util.Random;
 
 import Controller.GameTickSingleton;
-import dnd.UnitManagment.Bars.Directions;
+import dnd.UnitManagment.Directions;
     
 
 public class MoveUnit {

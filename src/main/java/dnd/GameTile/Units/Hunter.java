@@ -1,7 +1,7 @@
 package dnd.GameTile.Units;
 
 import Controller.GameTickSingleton;
-import dnd.UnitManagment.Bars.MagicNumbers;
+import dnd.UnitManagment.MagicNumbers;
 
 public class Hunter extends Player{
     private final double range;

@@ -1,5 +1,6 @@
 package dnd.GameTile;
 import java.util.Random;
+
 import View.CLI;
 
 public class Combat{
@@ -32,8 +33,8 @@ public class Combat{
     public void AbilityAttack(Unit Attaker, Unit Attacked, int AbilityDamage){
         int defensePoints = getRandomDP(Attacked);
         int diffrance = AbilityDamage - defensePoints;
-        cli.displayAbilityCombat(Attaker, Attacked, AbilityDamage, defensePoints);
         if(diffrance > 0){
+            cli.displayAbilityCombat(Attaker, Attacked, AbilityDamage, defensePoints);
             boolean resCombat = Attacked.takeHit(diffrance);
             if(resCombat){
                 Attacked.death(Attaker);

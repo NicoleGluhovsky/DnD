@@ -47,7 +47,7 @@ public abstract class Unit extends Tile{
         return isDead;
     }
 
-    protected HealthBar getHealth(){
+    public HealthBar getHealth(){
         return Health;
     }
 

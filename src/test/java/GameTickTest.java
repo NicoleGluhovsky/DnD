@@ -30,7 +30,7 @@ public class GameTickTest {
     private CLI cli;
     private Player player;
     private Enemy enemy;
-    private final String path = "src/test/java/level1.txt";
+    private final String path = "levels_dir";
 
 
     @Before
@@ -71,8 +71,9 @@ public class GameTickTest {
 
 
         List<String> boardString;
+        String filepath = path + "/level1.txt";
         try {
-            boardString =  Files.readAllLines(Paths.get(path));
+            boardString =  Files.readAllLines(Paths.get(filepath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

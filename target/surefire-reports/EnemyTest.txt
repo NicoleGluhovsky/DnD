@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: EnemyTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.103 s <<< FAILURE! - in EnemyTest
+initializationError(EnemyTest)  Time elapsed: 0.006 s  <<< ERROR!
+org.junit.runners.model.InvalidTestClassError: 
+Invalid test class 'EnemyTest':
+  1. Test class should have exactly one public zero-argument constructor
+

@@ -1,6 +1,5 @@
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -21,7 +20,6 @@ import dnd.GameTile.Point;
 import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Monster;
 import dnd.GameTile.Units.Player;
-import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Directions;
 
 
@@ -32,10 +30,8 @@ public class PlayerTest{
     private CLI cli;
     private Player player;
     private Enemy enemy;
-    private int playerID = 0;
-    private final String path = "src/test/java/level1.txt";
-    private HealthBar playerHealth;
-    private HealthBar enemyHealth;
+    private final int playerID = 0;
+    private final String path = "levels_dir";
 
     // please run with playerIDs 0-6
 
@@ -52,11 +48,6 @@ public class PlayerTest{
         Point nextPos = new Point(5,8, cli);
         enemy.setPosition(nextPos);
         game.swapPosition(enemy, game.getTileValue(nextPos));
-
-        Method method = Player.class.getDeclaredMethod("getHealth");
-        method.setAccessible(true);
-        playerHealth = (HealthBar) method.invoke(player);
-        enemyHealth = (HealthBar) method.invoke(enemy);
                
     }
     @After
@@ -111,17 +102,17 @@ public class PlayerTest{
     @Test
     public void B_PlayerAttack(){
         cli.send("____B_PlayerAttack____");
-        enemyHealth.heal(80);
-        int currentHealth = enemyHealth.getCurrent();
+        enemy.getHealth().heal(80);
+        int currentHealth = enemy.getHealth().getCurrent();
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
-        while(enemyHealth.getCurrent() == currentHealth){
+        while(enemy.getHealth().getCurrent() == currentHealth){
             PlayerTurn turn = new PlayerTurn(player, cli);
             turn.play(Directions.RIGHT);
         }
         
 
-        assertNotEquals(enemyHealth.getCurrent(), currentHealth);
+        assertNotEquals(enemy.getHealth().getCurrent(), currentHealth);
     }
 
     @Test
@@ -129,7 +120,7 @@ public class PlayerTest{
         cli.send("____C_PlayerGainXP____");
         int currentXP = player.getXP().getCurrent();
         
-        enemyHealth.setCurrent(1);
+        enemy.getHealth().setCurrent(1);
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
 
@@ -148,24 +139,24 @@ public class PlayerTest{
     public void D_PlayerLevelUp(){
         cli.send("____D_PlayerLevelUp____");
         player.getXP().setCurrent(player.getXP().getMax()-10);
-        int currentLevel = playerHealth.getCurrent();
+        int currentLevel = player.GetLevel();
 
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
-        enemyHealth.setCurrent(1);
+        enemy.getHealth().setCurrent(1);
 
-        while(enemyHealth.getCurrent() == 1){
+        while(enemy.getHealth().getCurrent() == 1){
             PlayerTurn turn = new PlayerTurn(player, cli);
             turn.play(Directions.RIGHT);
         }
 
-        assertEquals(currentLevel + 1, playerHealth);
+        assertEquals(currentLevel + 1, player.GetLevel());
     }
 
     //we have chacked Enemies in range in GameTickTest, and every player uses it in their CastAbility 
     @Test 
     public void E_castAbility(){
         cli.send("____E_castAbility____");
-        int currHealth = enemyHealth.getCurrent();
+        int currHealth = enemy.getHealth().getCurrent();
 
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
@@ -178,14 +169,14 @@ public class PlayerTest{
         turn.play(Directions.CASTABILITY);
 
 
-        assertNotEquals(currHealth, enemyHealth.getCurrent());
+        assertNotEquals(currHealth, enemy.getHealth().getCurrent());
     }
 
     @Test
     public void F_PlayerDie(){
         cli.send("____F_PlayerDie____");
 
-        playerHealth.setCurrent(1);
+        player.getHealth().setCurrent(1);
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
         while(!player.isDead()){//in case the AP comes out 0

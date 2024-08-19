@@ -30,7 +30,7 @@ public class Warrior extends Player{
     }
 
     @Override
-    protected void levelUP(){
+    public void levelUP(){
         super.levelUP();
         abilityBar.setCurrent(abilityBar.getMax());
     }

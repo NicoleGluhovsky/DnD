@@ -41,7 +41,7 @@ public abstract class Player extends Unit implements HeroicUnit {
         pray.setAsDead();
     }
     
-    protected int GetLevel(){
+    public int GetLevel(){
         return Level;
     }
 
@@ -79,7 +79,7 @@ public abstract class Player extends Unit implements HeroicUnit {
         return getDP() - currentDP;
     }
     
-    protected void levelUP(){
+    public void levelUP(){
         levelUpLevel();
         levelUpXP();
         int healthButh = levelUpHealth();

@@ -1,10 +1,9 @@
 package View;
 
-import View.CLIManagement.MessageCallBack;
 import View.CLIManagement.DeathCallBack;
+import View.CLIManagement.MessageCallBack;
 import dnd.GameTile.TileFactory;
 import dnd.GameTile.Unit;
-import dnd.GameTile.Units.Player;
 
 public abstract class view implements MessageCallBack, DeathCallBack {
 
@@ -56,9 +55,6 @@ public abstract class view implements MessageCallBack, DeathCallBack {
         deathMessage(Attaker, player);
         onDeath();
     }
-
-    public void displayLevelUp(Player player, int healthButh, int attackButh, int defenseButh) {
-        display(player.getUnitName() + " reached level " + player.GetLevel() + ": +" + healthButh + " Health, +" + attackButh + " Attack, +" + defenseButh + " Defense");}
 
     @Override
     public void onDeath(){

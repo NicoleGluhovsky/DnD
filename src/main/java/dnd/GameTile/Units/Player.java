@@ -1,6 +1,5 @@
 package dnd.GameTile.Units;
 
-import View.CLI;
 import dnd.GameTile.Unit;
 import dnd.UnitManagment.Bars.ExperienceBar;
 import dnd.UnitManagment.MagicChars;
@@ -9,8 +8,7 @@ import dnd.UnitManagment.MagicNumbers;
 
 public abstract class Player extends Unit implements HeroicUnit {
     private final ExperienceBar XP;
-    private int Level;
-    private CLI cli;
+    protected int Level;
 
     public Player(String name, int health, int AP, int DP){
         super(MagicChars.PLAYER.getSymbol(), name, health, AP, DP);
@@ -22,9 +20,6 @@ public abstract class Player extends Unit implements HeroicUnit {
         return XP;
     }
 
-    public void init(CLI cli){
-        this.cli = cli;
-    }
 
     @Override       
     public void death(Unit killer){
@@ -49,23 +44,49 @@ public abstract class Player extends Unit implements HeroicUnit {
     public int GetLevel(){
         return Level;
     }
-    
-    public void levelUP(){
-        XP.setCurrent(XP.getCurrent() - XP.getMax());
-        Level++;
-        XP.setMax(MagicNumbers.FIFTY.getValue() * Level);
 
-        int healthButh = getHealth().getMax();
-        getHealth().setMax(getHealth().getMax() + healthButh);
+    protected void levelUpXP(){
+        XP.setCurrent(XP.getCurrent() - XP.getMax());
+        XP.setMax(MagicNumbers.FIFTY.getValue() * Level);
+    }
+
+    protected void levelUpLevel(){
+        Level++;
+    }
+
+    protected int levelUpHealth(){
+        int currentHealth = getHealth().getMax();
+
+        getHealth().setMax(currentHealth + MagicNumbers.TEN.getValue() * Level);
         getHealth().setCurrent(getHealth().getMax());
 
-        int APButh = MagicNumbers.FOUR.getValue() * Level;
-        super.setAP(super.getAP() + APButh);
+        return getHealth().getMax() - currentHealth;
+    }
 
-        int DPButh = MagicNumbers.ONE.getValue() * Level;
-        super.setDP(super.getDP() + DPButh);
+    protected int levelUpAP(){
+        int currentAP = getAP();
 
-        cli.displayLevelUp(this, healthButh, APButh, DPButh);
+        setAP(currentAP + MagicNumbers.FOUR.getValue() * Level);
+
+        return getAP() - currentAP;
+    }
+
+    protected int levelUpDP(){
+        int currentDP = getDP();
+
+        setDP(currentDP + MagicNumbers.ONE.getValue() * Level);
+
+        return getDP() - currentDP;
+    }
+    
+    public void levelUP(){
+        levelUpLevel();
+        levelUpXP();
+        int healthButh = levelUpHealth();
+        int APButh = levelUpAP();
+        int DPButh = levelUpDP();
+
+        mc.send(getUnitName() + " reached level " + Level + ": +" + healthButh + " Health, +" + APButh + " Attack, +" + DPButh + " Defence");
     }
     
     public abstract void regainAbility();

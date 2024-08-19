@@ -29,11 +29,16 @@ public class Hunter extends Player{
     }
 
     @Override
+    protected int levelUpAP(){
+        int currentAP = super.getAP();
+        super.setAP(currentAP + MagicNumbers.TWO.getValue() * super.GetLevel());
+        return super.getAP() - currentAP;
+    }
+
+    @Override
     public void levelUP(){
         super.levelUP();
         arrowCount += MagicNumbers.TEN.getValue() * super.GetLevel();
-        super.setAP(super.getAP() + MagicNumbers.TWO.getValue() * super.GetLevel());
-        super.setDP(super.getDP() + MagicNumbers.ONE.getValue() * super.GetLevel());
     }
 
     public void Shoot(){

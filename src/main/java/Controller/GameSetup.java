@@ -49,8 +49,6 @@ public class GameSetup {
                 // create game object
                 game = GameTickSingleton.getInstance(PlayerID).getValue();
                 game.init(mc, dc, combat);
-                game.getPlayer().init(cli);
-
                 
         }
         

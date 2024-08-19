@@ -23,12 +23,26 @@ public class Mage extends Player{
         this.range = range;
     }
 
+    private int levelUpMaxMana(){
+        int maxManaCurr = ManaBar.getMax();
+        ManaBar.setMax(maxManaCurr + super.GetLevel() * MagicNumbers.TWENTYFIVE.getValue());
+        ManaBar.setCurrent(min(ManaBar.getCurrent() + (ManaBar.getMax() / 4), ManaBar.getMax()));
+        return ManaBar.getMax() - maxManaCurr;
+    }
+
+    private int levelUpSpellPower(){
+        int spellPowerCurr = spellPower;
+        spellPower = spellPower + super.GetLevel() * MagicNumbers.TEN.getValue();
+        return spellPower - spellPowerCurr;
+    }
+
     @Override
     public void levelUP(){
         super.levelUP();
-        ManaBar.setMax(ManaBar.getMax() + super.GetLevel() * MagicNumbers.TWENTYFIVE.getValue());
-        ManaBar.setCurrent(min(ManaBar.getCurrent() + ManaBar.getMax() / 4, ManaBar.getMax()));
-        spellPower += spellPower + super.GetLevel() * MagicNumbers.TEN.getValue();
+        int maxManaDiff = levelUpMaxMana();
+        int spellPowerdiff = levelUpSpellPower();
+
+        mc.send("+" + maxManaDiff + " maximum mana, +" + spellPowerdiff + " spell power");
     }
 
     @Override

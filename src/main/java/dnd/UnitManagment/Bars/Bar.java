@@ -22,7 +22,7 @@ public class Bar {
     }
 
     public void setMax(int max){
-        this.max = max;
+        this.max = Math.min(max, Integer.MAX_VALUE);
     }
 
     public void fillBar(){

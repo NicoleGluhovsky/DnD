@@ -28,15 +28,17 @@ public class PlayerTest{
     private CLI cli;
     private Player player;
     private Enemy enemy;
+    private int playerID = 0;
+
+    // please run with playerIDs 0-6
 
     @Before
     public void setUp() {
-        game = GameTickSingleton.getInstance(1).getValue();
+        game = GameTickSingleton.getInstance(playerID).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
         game.init(cli, cli, combat);
         player = game.getPlayer();
-        player.init(cli);
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat); 
         game.getEnemies().add(enemy);
@@ -139,13 +141,16 @@ public class PlayerTest{
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
         enemy.getHealth().setCurrent(1);
 
-        PlayerTurn turn = new PlayerTurn(player, cli);
-        turn.play(Directions.RIGHT);
+        while(enemy.getHealth().getCurrent() == 1){
+            PlayerTurn turn = new PlayerTurn(player, cli);
+            turn.play(Directions.RIGHT);
+        }
 
         assertEquals(currentLevel + 1, player.GetLevel());
     }
 
-    @Test
+    //we have chacked Enemies in range in GameTickTest, and every player uses it in their CastAbility 
+    @Test 
     public void E_castAbility(){
         cli.send("____E_castAbility____");
         int currHealth = enemy.getHealth().getCurrent();

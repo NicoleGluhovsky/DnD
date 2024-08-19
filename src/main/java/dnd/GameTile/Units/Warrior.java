@@ -15,14 +15,24 @@ public class Warrior extends Player{
         super(name, health, AP, DP);
         this.abilityBar = new AbilityBar(abilityCooldown, abilityCooldown, abilityCooldown);
     }
+    @Override
+    protected int levelUpAP(){
+        int currentAP = super.getAP();
+        super.setAP(currentAP + MagicNumbers.TWO.getValue() * super.GetLevel());
+        return super.getAP() - currentAP;
+    }
+
+    @Override
+    protected int levelUpHealth(){
+        int currentHealth = super.getHealth().getMax();
+        getHealth().setMax(currentHealth + MagicNumbers.FIVE.getValue() * super.GetLevel());
+        return super.getHealth().getMax() - currentHealth;
+    }
 
     @Override
     public void levelUP(){
         super.levelUP();
-        abilityBar.setCurrent(MagicNumbers.ZERO.getValue());
-        super.getHealth().setMax(super.getHealth().getMax() + MagicNumbers.FIVE.getValue() * super.GetLevel());
-        super.setAP(super.getAP() + MagicNumbers.TWO.getValue() * super.GetLevel());
-        super.setDP(super.getDP() + MagicNumbers.ONE.getValue() * super.GetLevel());
+        abilityBar.setCurrent(abilityBar.getMax());
     }
 
     @Override

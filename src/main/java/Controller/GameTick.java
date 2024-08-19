@@ -180,9 +180,6 @@ public final class GameTick{
         
         char[][] board = new char[maxY][maxX];
         for(Point p : gameLevel.keySet()){
-            if(p.getX() == 29 && p.getY() == 9){
-                System.out.println("here");
-            }
             Tile t = gameLevel.get(p);
             board[p.getY()][p.getX()] = t.getTileChar();
         }
@@ -193,7 +190,7 @@ public final class GameTick{
             return player.toString();
         
     }
-    boolean status(){
+    public boolean status(){
         if(winLevel()) {
             return NextLevel();
         }

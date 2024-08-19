@@ -21,10 +21,17 @@ public class Rogue extends Player{
     }
 
     @Override
+    protected int levelUpAP(){//works
+        int currentAP = super.getAP();
+        super.setAP(currentAP + MagicNumbers.THREE.getValue() * super.GetLevel());
+        return super.getAP() - currentAP;
+    }
+
+    @Override
     public void levelUP(){
         super.levelUP();    
         energyBar.fillBar();
-        super.setAP(getAP() + MagicNumbers.THREE.getValue() * super.GetLevel());
+
     }
 
     @Override

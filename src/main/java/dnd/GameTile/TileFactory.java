@@ -43,9 +43,9 @@ public class TileFactory {
             enemyTypes.put(MagicChars.TheMountain.getSymbol(), () -> new Boss('M', "The Mountain", 1000, 60, 25, 500, 6, 5));
             enemyTypes.put(MagicChars.QueenCersei.getSymbol(), () -> new Boss('C', "Queen Cersei", 100, 10, 10, 1000, 1, 8));
             enemyTypes.put(MagicChars.NightsKing.getSymbol(), () -> new Boss('K', "Night’s King", 5000, 300, 150, 5000, 8, 3));
-            enemyTypes.put(MagicChars.BonusTrap.getSymbol(), () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250, 1, 5, 0, false));
-            enemyTypes.put(MagicChars.QueensTrap.getSymbol(), () -> new Trap('Q', "Queen’s Trap", 250, 50, 10, 100, 3, 7, 0, false));
-            enemyTypes.put(MagicChars.DeathTrap.getSymbol(), () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10, 0, false));
+            enemyTypes.put(MagicChars.BonusTrap.getSymbol(), () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250, 1, 5, 0));
+            enemyTypes.put(MagicChars.QueensTrap.getSymbol(), () -> new Trap('Q', "Queen’s Trap", 250, 50, 10, 100, 3, 7, 0));
+            enemyTypes.put(MagicChars.DeathTrap.getSymbol(), () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10, 0));
         }
 
         public TileFactory(){}

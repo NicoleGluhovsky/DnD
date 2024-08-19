@@ -35,16 +35,16 @@ public class TileFactory {
         static {
             enemyTypes.put(MagicChars.LannisterSolider.getSymbol(), () -> new Monster('s', "Lannister Solider", 80, 8, 3, 25, 3));
             enemyTypes.put(MagicChars.LannisterKnight.getSymbol(), () -> new Monster('k', "Lannister Knight", 200, 14, 8, 50, 4));
-            enemyTypes.put(MagicChars.QueensGuard.getSymbol() , () -> new Monster('q', "Queen’s Guard", 400, 20, 15, 100, 5));
+            enemyTypes.put(MagicChars.QueensGuard.getSymbol() , () -> new Monster('q', "Queens Guard", 40, 20, 15, 100, 5));
             enemyTypes.put(MagicChars.Wright.getSymbol(), () -> new Monster('z', "Wright", 600, 30, 15, 100, 3));
             enemyTypes.put(MagicChars.BearWright.getSymbol(), () -> new Monster('b', "Bear-Wright", 1000, 75, 30, 250, 4));
             enemyTypes.put(MagicChars.GiantWright.getSymbol() , () -> new Monster('g', "Giant-Wright", 1500, 100, 40, 500, 5));
             enemyTypes.put(MagicChars.WhiteWalker.getSymbol(), () -> new Monster('w', "White Walker", 2000, 150, 50, 1000, 6));
             enemyTypes.put(MagicChars.TheMountain.getSymbol(), () -> new Boss('M', "The Mountain", 1000, 60, 25, 500, 6, 5));
             enemyTypes.put(MagicChars.QueenCersei.getSymbol(), () -> new Boss('C', "Queen Cersei", 100, 10, 10, 1000, 1, 8));
-            enemyTypes.put(MagicChars.NightsKing.getSymbol(), () -> new Boss('K', "Night’s King", 5000, 300, 150, 5000, 8, 3));
+            enemyTypes.put(MagicChars.NightsKing.getSymbol(), () -> new Boss('K', "Nights King", 5000, 300, 150, 5000, 8, 3));
             enemyTypes.put(MagicChars.BonusTrap.getSymbol(), () -> new Trap('B', "Bonus Trap", 1, 1, 1, 250, 1, 5, 0));
-            enemyTypes.put(MagicChars.QueensTrap.getSymbol(), () -> new Trap('Q', "Queen’s Trap", 250, 50, 10, 100, 3, 7, 0));
+            enemyTypes.put(MagicChars.QueensTrap.getSymbol(), () -> new Trap('Q', "Queens Trap", 250, 50, 10, 100, 3, 7, 0));
             enemyTypes.put(MagicChars.DeathTrap.getSymbol(), () -> new Trap('D', "Death Trap", 500, 100, 20, 250, 1, 10, 0));
         }
 

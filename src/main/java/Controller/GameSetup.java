@@ -21,17 +21,19 @@ public class GameSetup {
         private final CLI cli;
         private final TerminalInput input;
         private GameTick game;
+        private final String path;
 
-        public GameSetup() {
+        public GameSetup(String path) {
                 cli = new CLI();
                 mc = cli;
                 dc = cli;
+                this.path = path;
                 combat = new Combat(cli);
                 input = new TerminalInput(mc);
 
         }
 
-        public void initiate(){
+        private void initiate(){
 
                 // show player the charecter options
                 cli.displayCharacterOptions();
@@ -48,7 +50,7 @@ public class GameSetup {
                 }
                 // create game object
                 game = GameTickSingleton.getInstance(PlayerID).getValue();
-                game.init(mc, dc, combat);
+                game.init(mc, dc, combat, path);
                 
         }
         

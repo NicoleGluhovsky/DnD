@@ -21,7 +21,7 @@ public class Monster extends Enemy {
     }
 
     @Override
-    public void noticePlayer(Player player, MoveUnit moveUnit){
+    protected void noticePlayer(Player player, MoveUnit moveUnit){
         int dx = this.getPosition().xDiff(player.getPosition());
         int dy = this.getPosition().yDiff(player.getPosition());
             if (Math.abs(dx) > Math.abs(dy)){

@@ -18,6 +18,7 @@ import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Player;
 import dnd.GameTile.Wall;
 import dnd.UnitManagment.Directions;
+import dnd.UnitManagment.MagicNumbers;
 
 
 
@@ -33,6 +34,7 @@ public final class GameTick{
     private DeathCallBack dc;
     private int MaxLevel;
     private Combat combat;
+    private String path;
 
     public GameTick(Player player, int level){
         this.level = level;
@@ -40,11 +42,12 @@ public final class GameTick{
 
     }
 
-    public void init(MessageCallBack mc, DeathCallBack dc, Combat combat){
+    public void init(MessageCallBack mc, DeathCallBack dc, Combat combat, String path_to_level){
         this.mc = mc;
         this.dc = dc;
         this.combat = combat;
-        this.MaxLevel = getLevelCount();
+        this.path = path_to_level;
+        this.MaxLevel = MagicNumbers.FOUR.getValue();
         LoadBoardLevel();
     }
 
@@ -72,7 +75,7 @@ public final class GameTick{
         return enemies;
     }
 
-    public void LoadBoardLevel() {
+    private void LoadBoardLevel() {
         List<String> fileContent = readLevelFile(level);
         // for each char add to gameLevel
         gameLevel =  createNewTiles(fileContent);
@@ -131,24 +134,10 @@ public final class GameTick{
         return gameLevel.get(pos);
     }
 
-    private int getLevelCount(){
-        //String path = "src\\main\\java\\dnd\\recorces\\Levels";
-        //String path = "DnD/src/main/resources/Levels";
-        String path = "/Users/ranbrachel/Desktop/university/simester_2/OOP/Assintment 3/DND/DnD/src/main/resources/Levels";
-        try {
-            return new java.io.File(path).listFiles().length;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        
-    }
 
     private List<String> readLevelFile(int level){
-        //String path = "DnD/src/main/resources/Levels/level";
-        //String path = "src\\main\\java\\dnd\\recorces\\Levels\\level";
-        String path = "/Users/ranbrachel/Desktop/university/simester_2/OOP/Assintment 3/DND/DnD/src/main/resources/Levels/level";
 
-        String filePath = path + level + ".txt";
+        String filePath =  path + "/level" + level + ".txt";
 
         List<String> lines;
         try {
@@ -187,7 +176,7 @@ public final class GameTick{
     }
 
     String getGameState() {
-            return player.toString();
+        return player.toString();
         
     }
     public boolean status(){

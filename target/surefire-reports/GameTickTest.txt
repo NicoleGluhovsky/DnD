@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: GameTickTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.038 s <<< FAILURE! - in GameTickTest
+A_LoadBoardLevelTest(GameTickTest)  Time elapsed: 0.034 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+
+B_getEnemiesInRangeTest(GameTickTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+
+C_getClosesetEnemy(GameTickTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+
+D_killedAnEnemyTest(GameTickTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at GameTickTest.setUp(GameTickTest.java:41)
+

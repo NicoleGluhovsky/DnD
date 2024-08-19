@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compile Java",
+      "type": "shell",
+      "command": "javac",
+      "args": [
+        "-d",
+        "target/classes",
+        "-sourcepath",
+        "src",
+        "src/main/java/**/*.java",
+        "src/test/java/**/*.java"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Create JAR",
+      "type": "shell",
+      "dependsOn": "Compile Java",
+      "command": "jar",
+      "args": [
+        "cf",
+        "hw3.jar",
+        "-C",
+        "target/classes",
+        ".",
+        "-C",
+        "target/test-classes",
+        "."
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

@@ -26,18 +26,19 @@ import dnd.GameTile.Units.Trap;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class EnemyTest {
+public class EnemyTest{
     private GameTick game;
     private CLI cli;
     private Player player;
     private Enemy enemy;
+    private final String path = "levels_dir";
 
     @Before
-    public void setUp(){
+    public void setUp() {
        game = GameTickSingleton.getInstance(1).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat); 
@@ -59,16 +60,16 @@ public class EnemyTest {
     @Test
     public void A_EnemyMoveRandom(){
         List<Point> enemyPositions = new ArrayList<>();
-        for (Enemy enemy : game.getEnemies()) {
-            enemyPositions.add(enemy.getPosition());
+        for (Enemy e : game.getEnemies()) {
+            enemyPositions.add(e.getPosition());
         }
-        for (Enemy enemy : game.getEnemies()) {
-            EnemyTurn turn = new EnemyTurn(player, enemy, cli);
+        for (Enemy e : game.getEnemies()) {
+            EnemyTurn turn = new EnemyTurn(player, e, cli);
             turn.play();
         }
         List<Point> newEnemyPositions = new ArrayList<>();
-        for (Enemy enemy : game.getEnemies()) {
-            newEnemyPositions.add(enemy.getPosition());
+        for (Enemy e : game.getEnemies()) {
+            newEnemyPositions.add(e.getPosition());
         }
         for (int i = 0; i < enemyPositions.size(); i++) {
             boolean b = enemyPositions.get(i).isInRange(newEnemyPositions.get(i),2.0);
@@ -93,8 +94,8 @@ public class EnemyTest {
             game.swapPosition(t2, t1);
         }
 
-        for (Enemy enemy : game.getEnemies()) {
-            EnemyTurn turn = new EnemyTurn(player, enemy, cli);
+        for (Enemy e : game.getEnemies()) {
+            EnemyTurn turn = new EnemyTurn(player, e, cli);
             turn.play();
         }
         for(int i=0; i<monsters.size(); i++){
@@ -158,9 +159,6 @@ public class EnemyTest {
         }
 
         for(Enemy e : game.getEnemies()){
-            if(e.getHiddenChar() == 'B'){
-                    System.out.println("Hidden");
-                }
             EnemyTurn turn = new EnemyTurn(player, e, cli);
             turn.play();
             turn = new EnemyTurn(player, e, cli);
@@ -176,9 +174,6 @@ public class EnemyTest {
 
         for(int i=0;i<6;i++){
             for(Enemy e : game.getEnemies()){
-                if(e.getHiddenChar() == 'B'){
-                    System.out.println("Hidden");
-                }
                 EnemyTurn turn = new EnemyTurn(player, e, cli);
                 turn.play();
             }
@@ -243,8 +238,5 @@ public class EnemyTest {
 
         assertEquals(nextPos2, enemy.getPosition());
     }
-
-
-
 
 }

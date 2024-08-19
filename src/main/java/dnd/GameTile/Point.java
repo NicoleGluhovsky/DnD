@@ -27,10 +27,10 @@ public class Point implements Comparable<Point>{
         return y;
     }
 
-    protected void setX(int x){
+    private void setX(int x){
         this.x = x;
     }
-    protected void setY(int y){
+    private  void setY(int y){
         this.y = y;
     }
     public void Move(Directions direction){

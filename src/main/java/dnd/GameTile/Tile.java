@@ -26,11 +26,11 @@ public abstract class Tile{
     protected void setPlayerAsDead(){
         this.tileChar = MagicChars.DEAD.getSymbol();
     }
-    public char getHiddenChar(){
+    protected char getHiddenChar(){
         return this.charBackup;
     }
 
-    public void changeTileVisibility(boolean visible){
+    protected void changeTileVisibility(boolean visible){
         if(visible){
             this.tileChar = charBackup;
         }

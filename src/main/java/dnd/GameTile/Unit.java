@@ -33,9 +33,8 @@ public abstract class Unit extends Tile{
     }
     
 
-    protected void gameTick(){}; //each unit has a different game tick
-    //protected abstract void obliterate(Unit victim);
-    protected abstract void death(Unit killer);  //each unit has a different death
+    protected void gameTick(){}; 
+    protected abstract void death(Unit killer); 
 
     public abstract void kill(Player Visited);
     public abstract void kill(Enemy Visited);
@@ -52,7 +51,7 @@ public abstract class Unit extends Tile{
         return Health;
     }
 
-    public int getAP(){
+    protected int getAP(){
         return AttackPoints;
     }
 
@@ -60,7 +59,7 @@ public abstract class Unit extends Tile{
         this.AttackPoints = AP;
     }
 
-    public int getDP(){
+    protected int getDP(){
         return DefensePoints;
     }
 
@@ -74,7 +73,7 @@ public abstract class Unit extends Tile{
         return b;
     } 
 
-    public void Heal(int heal){
+    protected void Heal(int heal){
         getHealth().heal(heal);
     }
 

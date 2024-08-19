@@ -1,0 +1,40 @@
+-------------------------------------------------------------------------------
+Test set: PlayerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.005 s <<< FAILURE! - in PlayerTest
+A_MovePlayer(PlayerTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+
+B_PlayerAttack(PlayerTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+
+C_PlayerGainXP(PlayerTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+
+D_PlayerLevelUp(PlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+
+E_castAbility(PlayerTest)  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+
+F_PlayerDie(PlayerTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.RuntimeException: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+Caused by: java.nio.file.NoSuchFileException: src\test\java\level1.txt\level1.txt
+	at PlayerTest.setUp(PlayerTest.java:47)
+

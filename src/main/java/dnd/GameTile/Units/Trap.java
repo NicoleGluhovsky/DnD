@@ -28,7 +28,7 @@ public class Trap extends Enemy{
     }
 
     @Override
-    public void noticePlayer(Player player, MoveUnit moveUnit){
+    protected void noticePlayer(Player player, MoveUnit moveUnit){
         player.takeHit(this.getAP());
     }
 

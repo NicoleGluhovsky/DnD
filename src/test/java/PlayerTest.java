@@ -1,4 +1,6 @@
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -28,16 +30,17 @@ public class PlayerTest{
     private CLI cli;
     private Player player;
     private Enemy enemy;
-    private int playerID = 0;
+    private final int playerID = 0;
+    private final String path = "levels_dir";
 
     // please run with playerIDs 0-6
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         game = GameTickSingleton.getInstance(playerID).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat); 

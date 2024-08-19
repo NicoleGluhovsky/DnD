@@ -36,7 +36,7 @@ public class Hunter extends Player{
     }
 
     @Override
-    public void levelUP(){
+    protected void levelUP(){
         super.levelUP();
         arrowCount += MagicNumbers.TEN.getValue() * super.GetLevel();
     }

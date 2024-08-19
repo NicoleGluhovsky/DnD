@@ -1,4 +1,7 @@
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -18,6 +21,7 @@ import dnd.GameTile.Point;
 import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Monster;
 import dnd.GameTile.Units.Player;
+import dnd.UnitManagment.Bars.HealthBar;
 import dnd.UnitManagment.Directions;
 
 
@@ -29,15 +33,18 @@ public class PlayerTest{
     private Player player;
     private Enemy enemy;
     private int playerID = 0;
+    private final String path = "src/test/java/level1.txt";
+    private HealthBar playerHealth;
+    private HealthBar enemyHealth;
 
     // please run with playerIDs 0-6
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         game = GameTickSingleton.getInstance(playerID).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat); 
@@ -45,6 +52,11 @@ public class PlayerTest{
         Point nextPos = new Point(5,8, cli);
         enemy.setPosition(nextPos);
         game.swapPosition(enemy, game.getTileValue(nextPos));
+
+        Method method = Player.class.getDeclaredMethod("getHealth");
+        method.setAccessible(true);
+        playerHealth = (HealthBar) method.invoke(player);
+        enemyHealth = (HealthBar) method.invoke(enemy);
                
     }
     @After
@@ -99,17 +111,17 @@ public class PlayerTest{
     @Test
     public void B_PlayerAttack(){
         cli.send("____B_PlayerAttack____");
-        enemy.getHealth().heal(80);
-        int currentHealth = enemy.getHealth().getCurrent();
+        enemyHealth.heal(80);
+        int currentHealth = enemyHealth.getCurrent();
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
-        while(enemy.getHealth().getCurrent() == currentHealth){
+        while(enemyHealth.getCurrent() == currentHealth){
             PlayerTurn turn = new PlayerTurn(player, cli);
             turn.play(Directions.RIGHT);
         }
         
 
-        assertNotEquals(enemy.getHealth().getCurrent(), currentHealth);
+        assertNotEquals(enemyHealth.getCurrent(), currentHealth);
     }
 
     @Test
@@ -117,7 +129,7 @@ public class PlayerTest{
         cli.send("____C_PlayerGainXP____");
         int currentXP = player.getXP().getCurrent();
         
-        enemy.getHealth().setCurrent(1);
+        enemyHealth.setCurrent(1);
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
 
@@ -136,24 +148,24 @@ public class PlayerTest{
     public void D_PlayerLevelUp(){
         cli.send("____D_PlayerLevelUp____");
         player.getXP().setCurrent(player.getXP().getMax()-10);
-        int currentLevel = player.GetLevel();
+        int currentLevel = playerHealth.getCurrent();
 
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
-        enemy.getHealth().setCurrent(1);
+        enemyHealth.setCurrent(1);
 
-        while(enemy.getHealth().getCurrent() == 1){
+        while(enemyHealth.getCurrent() == 1){
             PlayerTurn turn = new PlayerTurn(player, cli);
             turn.play(Directions.RIGHT);
         }
 
-        assertEquals(currentLevel + 1, player.GetLevel());
+        assertEquals(currentLevel + 1, playerHealth);
     }
 
     //we have chacked Enemies in range in GameTickTest, and every player uses it in their CastAbility 
     @Test 
     public void E_castAbility(){
         cli.send("____E_castAbility____");
-        int currHealth = enemy.getHealth().getCurrent();
+        int currHealth = enemyHealth.getCurrent();
 
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
@@ -166,14 +178,14 @@ public class PlayerTest{
         turn.play(Directions.CASTABILITY);
 
 
-        assertNotEquals(currHealth, enemy.getHealth().getCurrent());
+        assertNotEquals(currHealth, enemyHealth.getCurrent());
     }
 
     @Test
     public void F_PlayerDie(){
         cli.send("____F_PlayerDie____");
 
-        player.getHealth().setCurrent(1);
+        playerHealth.setCurrent(1);
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
         while(!player.isDead()){//in case the AP comes out 0

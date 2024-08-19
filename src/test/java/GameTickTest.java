@@ -30,6 +30,7 @@ public class GameTickTest {
     private CLI cli;
     private Player player;
     private Enemy enemy;
+    private final String path = "src/test/java/level1.txt";
 
 
     @Before
@@ -37,9 +38,8 @@ public class GameTickTest {
         game = GameTickSingleton.getInstance(1).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
-        game.init(cli, cli, combat);
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat);
         game.getEnemies().add(enemy);
@@ -70,7 +70,6 @@ public class GameTickTest {
         }
 
 
-        String path = "/Users/ranbrachel/Desktop/university/simester_2/OOP/Assintment 3/DND/DnD/src/main/resources/Levels/level1.txt";
         List<String> boardString;
         try {
             boardString =  Files.readAllLines(Paths.get(path));

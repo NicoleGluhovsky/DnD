@@ -1,6 +1,8 @@
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,21 +27,26 @@ public class ViewTest {
     private GameTick game;
     private Player player;
     private ByteArrayOutputStream outputStreamCaptor; 
-    private Enemy enemy;   
+    private Enemy enemy;  
+    private String path = "src/main/resources/Levels/level1.txt"; 
+    private Method method;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchMethodException {
         game = GameTickSingleton.getInstance(1).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
-        game.init(cli, cli, combat);
         enemy = new Boss('T', "tomas", 100, 100, 1, 51,10,1);
         enemy.init(cli, cli, combat);
         game.getEnemies().add(enemy);
         Point nextPos = new Point(5,8, cli);
         enemy.setPosition(nextPos);
+
+        this.method = Player.class.getDeclaredMethod("levelUP");
+        this.method.setAccessible(true);
+        
 
         outputStreamCaptor = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -96,17 +103,10 @@ public class ViewTest {
     }
 
     @Test
-    public void displayLevelUpTest() {
-        int healthDiff = player.getHealth().getMax();
-        int attackDiff = player.getAP();
-        int defenseDiff = player.getDP();
-        int level = player.GetLevel() + 1;
-        player.levelUP();
+    public void displayLevelUpTest() throws IllegalAccessException, InvocationTargetException {
+        this.method.invoke(player);
         String capturedOutput = outputStreamCaptor.toString();
-        healthDiff = player.getHealth().getMax() - healthDiff;
-        attackDiff = player.getAP() - attackDiff;
-        defenseDiff = player.getDP() - defenseDiff;
-        String expectedOutput = player.getUnitName() + " reached level " + level + ": +" + healthDiff + " Health, +" + attackDiff + " Attack, +" + defenseDiff + " Defence\n";
+        String expectedOutput = player.getUnitName() + " reached level: 2 +10 Health, +4 Attack,  +2 Defence\n";
         assertEquals(expectedOutput, capturedOutput);
     }
 

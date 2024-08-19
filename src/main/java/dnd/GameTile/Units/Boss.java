@@ -39,7 +39,7 @@ public class Boss extends Monster implements HeroicUnit {
     }
 
     @Override
-    public void noticePlayer(Player player, MoveUnit moveUnit){
+    protected void noticePlayer(Player player, MoveUnit moveUnit){
         if(combatTicks == abilityFrequency){
             this.player = player;
             combatTicks = 0;

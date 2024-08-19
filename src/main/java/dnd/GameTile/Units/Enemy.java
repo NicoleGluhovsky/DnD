@@ -1,7 +1,7 @@
 package dnd.GameTile.Units;
 
-import dnd.GameTile.Unit;
 import dnd.GameTile.MoveUnit;
+import dnd.GameTile.Unit;
 
 public abstract class Enemy extends Unit{
     private final int experienceVal;
@@ -12,16 +12,16 @@ public abstract class Enemy extends Unit{
         this.experienceVal = xp;
     }
     
-    public int getXP()
+    protected int getXP()
     {
         return experienceVal;
     }
 
-    public void setRange(double range){
+    protected void setRange(double range){
         this.range = range;
     }
 
-    public double getRange(){
+    protected double getRange(){
         return range;
     }
 
@@ -31,7 +31,7 @@ public abstract class Enemy extends Unit{
         }
     }
 
-    public void noticePlayer(Player player, MoveUnit moveUnit){};
+    protected void noticePlayer(Player player, MoveUnit moveUnit){};
 
     @Override
     public void death(Unit killer){

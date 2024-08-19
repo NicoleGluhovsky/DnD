@@ -1,3 +1,5 @@
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +25,7 @@ import dnd.GameTile.Units.Enemy;
 import dnd.GameTile.Units.Monster;
 import dnd.GameTile.Units.Player;
 import dnd.GameTile.Units.Trap;
+import dnd.UnitManagment.Bars.HealthBar;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -31,13 +34,15 @@ public class EnemyTest {
     private CLI cli;
     private Player player;
     private Enemy enemy;
+    private final String path = "src/test/java/level1.txt";
+    private HealthBar playerHealth;
 
     @Before
-    public void setUp(){
+    public void setUp() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
        game = GameTickSingleton.getInstance(1).getValue();
         cli = new CLI();
         Combat combat = new Combat(cli);
-        game.init(cli, cli, combat);
+        game.init(cli, cli, combat, path);
         player = game.getPlayer();
         enemy = new Monster('T', "tomas", 100, 100, 1, 51,10);
         enemy.init(cli, cli, combat); 
@@ -45,6 +50,10 @@ public class EnemyTest {
         Point nextPos = new Point(5,8, cli);
         enemy.setPosition(nextPos);
         game.swapPosition(enemy, game.getTileValue(nextPos));
+
+        Method method = Player.class.getDeclaredMethod("getHealth");
+        method.setAccessible(true);
+        playerHealth = (HealthBar) method.invoke(player);
     }
 
     @After
@@ -105,17 +114,17 @@ public class EnemyTest {
 
     @Test
     public void C_EnemyAttack(){
-        int currentHealth = player.getHealth().getCurrent();
+        int currentHealth = playerHealth.getCurrent();
         
-        player.getHealth().setCurrent(400);
+        playerHealth.setCurrent(400);
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
 
-        while(player.getHealth().getCurrent() == currentHealth){//in case the AP comes out 0
+        while(playerHealth.getCurrent() == currentHealth){//in case the AP comes out 0
             EnemyTurn turn = new EnemyTurn(player, enemy, cli);
             turn.play();
         }
 
-        assertNotEquals(player.getHealth().getCurrent(), currentHealth);
+        assertNotEquals(playerHealth.getCurrent(), currentHealth);
     }
 
     @Test
@@ -126,20 +135,20 @@ public class EnemyTest {
         game.swapPosition(boss, game.getTileValue(new Point(5, 9, cli)));
         
 
-        int currentHealth = player.getHealth().getCurrent();
+        int currentHealth = playerHealth.getCurrent();
         
         EnemyTurn turn = new EnemyTurn(player, boss, cli);
         turn.play();
 
-        assertEquals(player.getHealth().getCurrent(), currentHealth);
-        while(player.getHealth().getCurrent() == currentHealth){
+        assertEquals(playerHealth.getCurrent(), currentHealth);
+        while(playerHealth.getCurrent() == currentHealth){
             turn = new EnemyTurn(player, boss, cli);
             turn.play();
         }
         
 
 
-        assertNotEquals(player.getHealth().getCurrent(), currentHealth);
+        assertNotEquals(playerHealth.getCurrent(), currentHealth);
 
 
 
@@ -158,9 +167,6 @@ public class EnemyTest {
         }
 
         for(Enemy e : game.getEnemies()){
-            if(e.getHiddenChar() == 'B'){
-                    System.out.println("Hidden");
-                }
             EnemyTurn turn = new EnemyTurn(player, e, cli);
             turn.play();
             turn = new EnemyTurn(player, e, cli);
@@ -176,9 +182,6 @@ public class EnemyTest {
 
         for(int i=0;i<6;i++){
             for(Enemy e : game.getEnemies()){
-                if(e.getHiddenChar() == 'B'){
-                    System.out.println("Hidden");
-                }
                 EnemyTurn turn = new EnemyTurn(player, e, cli);
                 turn.play();
             }
@@ -198,14 +201,14 @@ public class EnemyTest {
         trap.setPosition(new Point(10, 10, cli));
 
         game.swapPosition(trap, game.getTileValue(new Point(2, 9, cli)));
-        int currentHealth = player.getHealth().getCurrent();
+        int currentHealth = playerHealth.getCurrent();
 
-        while(player.getHealth().getCurrent() == currentHealth){//in case the AP comes out 0
+        while(playerHealth.getCurrent() == currentHealth){//in case the AP comes out 0
             EnemyTurn turn = new EnemyTurn(player, trap, cli);
             turn.play();
         }
 
-        assertNotEquals(player.getHealth().getCurrent(), currentHealth);
+        assertNotEquals(playerHealth.getCurrent(), currentHealth);
 
     }
 
@@ -213,14 +216,14 @@ public class EnemyTest {
     public void G_MonsterAttackesPlayer(){
 
         game.swapPosition(enemy, game.getTileValue(new Point(2, 9, cli)));
-        int currentHealth = player.getHealth().getCurrent();
+        int currentHealth = playerHealth.getCurrent();
 
-        while(player.getHealth().getCurrent() == currentHealth){//in case the AP comes out 0
+        while(playerHealth.getCurrent() == currentHealth){//in case the AP comes out 0
             EnemyTurn turn = new EnemyTurn(player, enemy, cli);
             turn.play();
         }
 
-        assertNotEquals(player.getHealth().getCurrent(), currentHealth);
+        assertNotEquals(playerHealth.getCurrent(), currentHealth);
 
     }
 
